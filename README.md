@@ -25,7 +25,7 @@ The pipeline is designed to serve both sides of the PA process: **providers** ne
 
 ## Pipeline Architecture
 
-![Pipeline Diagram](assets/mermaid_diagram.png)
+![Pipeline Diagram](assets/mermaid-diagram.png)
 
 This pipeline converts unstructured clinical notes into structured, policy-grounded prior authorization decisions using NLP extraction, rule-based validation, and LLM reasoning.
 
