@@ -1,0 +1,26 @@
+case_id,insurance_type,insurance_plan_type,clinical_category,drug_requested,documentation_quality,true_label
+PA-001,Aetna HMO,HMO,biologic_dermatology,dupilumab 300mg SC q2w,strong,APPROVE
+PA-002,BlueCross PPO,PPO,glp1_diabetes,semaglutide 0.5mg SC weekly (Ozempic),strong,APPROVE
+PA-003,Cigna EPO,EPO,imaging,,weak,DENY
+PA-004,Medicare Advantage (Humana Gold Plus),Medicare Advantage,biologic_rheumatology,adalimumab 40mg SC q2w (Humira),strong,APPROVE
+PA-005,Oscar Health,Marketplace ACA,genetic_testing,,weak,DENY
+PA-006,UnitedHealthcare Choice Plus,PPO,mental_health,esketamine 56mg intranasal (Spravato),strong,PENDING_REVIEW
+PA-007,Molina Healthcare (Medicaid),Medicaid Managed Care,bariatric_surgery,,strong,APPROVE
+PA-008,Aetna HMO,HMO,biologic_pulmonology,dupilumab 300mg SC q2w (Dupixent) for asthma,weak,DENY
+PA-009,Humana Gold Plus (Medicare Advantage),Medicare Advantage,oncology,pembrolizumab 200mg IV q3w (Keytruda),strong,APPROVE
+PA-010,BlueCross BlueShield PPO,PPO,glp1_obesity,tirzepatide 5mg SC weekly (Mounjaro),partial,PENDING_REVIEW
+PA-011,Cigna HMO,HMO,biologic_rheumatology,secukinumab 150mg SC monthly (Cosentyx),strong,APPROVE
+PA-012,UnitedHealthcare Medicaid,Medicaid Managed Care,imaging,,strong,APPROVE
+PA-013,Anthem BCBS PPO,PPO,mental_health,aripiprazole lauroxil 441mg IM monthly (Aristada),strong,APPROVE
+PA-014,Cigna PPO,PPO,glp1_diabetes,dulaglutide 1.5mg SC weekly (Trulicity),weak,DENY
+PA-015,BlueCross Medicaid,Medicaid Managed Care,infusion_neurology,IVIG 30g IV monthly (Privigen),strong,APPROVE
+PA-016,Aetna PPO,PPO,biologic_gastroenterology,vedolizumab 300mg IV q8w (Entyvio),strong,APPROVE
+PA-017,Oscar Health,Marketplace ACA,imaging,,weak,DENY
+PA-018,Humana PPO,PPO,oncology,olaparib 300mg PO BID (Lynparza),strong,APPROVE
+PA-019,Cigna HMO,HMO,mental_health,transcranial magnetic stimulation (TMS),weak,DENY
+PA-020,UnitedHealthcare PPO,PPO,biologic_dermatology,secukinumab 300mg SC (Cosentyx) for plaque psoriasis,strong,APPROVE
+PA-021,Aetna HMO,HMO,glp1_obesity,semaglutide 2.4mg SC weekly (Wegovy),strong,APPROVE
+PA-022,Molina Medicaid,Medicaid Managed Care,infusion_hematology,eculizumab 900mg IV q2w (Soliris),strong,APPROVE
+PA-023,Anthem PPO,PPO,imaging,,weak,DENY
+PA-024,BCBS Federal Employee Plan,PPO,biologic_rheumatology,abatacept 125mg SC weekly (Orencia),strong,APPROVE
+PA-025,Cigna PPO,PPO,mental_health,naltrexone/bupropion 8mg/90mg (Contrave),partial,PENDING_REVIEW

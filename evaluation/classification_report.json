@@ -1,0 +1,33 @@
+{
+  "APPROVE": {
+    "precision": 0.8461538461538461,
+    "recall": 0.7333333333333333,
+    "f1-score": 0.7857142857142857,
+    "support": 15.0
+  },
+  "DENY": {
+    "precision": 1.0,
+    "recall": 0.2857142857142857,
+    "f1-score": 0.4444444444444444,
+    "support": 7.0
+  },
+  "PENDING_REVIEW": {
+    "precision": 0.1,
+    "recall": 0.3333333333333333,
+    "f1-score": 0.15384615384615385,
+    "support": 3.0
+  },
+  "accuracy": 0.56,
+  "macro avg": {
+    "precision": 0.6487179487179487,
+    "recall": 0.45079365079365075,
+    "f1-score": 0.4613349613349613,
+    "support": 25.0
+  },
+  "weighted avg": {
+    "precision": 0.7996923076923078,
+    "recall": 0.56,
+    "f1-score": 0.6143345543345543,
+    "support": 25.0
+  }
+}

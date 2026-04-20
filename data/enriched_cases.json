@@ -1,0 +1,1024 @@
+[
+  {
+    "case_id": "PA-001",
+    "true_label": "APPROVE",
+    "insurance_type": "Aetna HMO",
+    "clinical_category": "biologic_dermatology",
+    "documentation_quality": "strong",
+    "note": "Patient is a 31-year-old female with moderate-to-severe atopic dermatitis (ICD-10: L20.9) affecting 35% BSA with EASI score of 28.4. Completed 8-week trial of triamcinolone 0.1% cream (inadequate response, BSA unchanged at 33%). Completed 12-week trial of tacrolimus 0.1% ointment (discontinued due to burning intolerance, documented visit 03/2024). Dermatology consulted and recommends dupilumab given failed topical therapies and significant impact on quality of life (DLQI 18). No active ocular herpes or conjunctivitis. No live vaccines pending.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "L20.9"
+      ],
+      "procedures": [],
+      "drugs_failed": [
+        "tacrolimus",
+        "triamcinolone",
+        "topical therapies",
+        "due to"
+      ],
+      "lab_values": {
+        "DLQI": "18"
+      },
+      "clinical_entities": [
+        "recommends dupilumab",
+        "cream",
+        "burning intolerance",
+        "unchanged",
+        "affecting",
+        "tacrolimus",
+        "quality of life",
+        "BSA",
+        "documented",
+        "vaccines"
+      ],
+      "has_prior_therapy_failure": true,
+      "has_specialist_support": true,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: Aetna Clinical Policy Bulletin \u2014 Dupilumab (Dupixent)]\nAETNA COVERAGE CRITERIA \u2014 DUPILUMAB Atopic Dermatitis: Dupilumab is covered when ALL of the following are met: Confirmed diagnosis of moderate-to-severe atopic dermatitis by a dermatologist. EASI score >= 16 OR IGA score >= 3 OR BSA >= 10%. Inadequate response or intolerance to at least two topical therapies: medium-to-high potency topical corticosteroid and topical calcineurin inhibitor. Dermatology specialist evaluation and recommendation. Asthma add-on maintenance: Confirmed moderate-to-severe asthma with FEV1 documented. Eosinophilic phenotype: blood eosinophils >= 150 cells/uL OR FeNO >= 25 ppb. Inadequate response to medium-to-high dose ICS/LABA combination for >= 3 months. Pulmonology evaluation required.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nfor moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have failed one TNF inhibitor may receive authorization for a biologic with a different mechanism without repeat csDMARD trial.",
+    "retrieved_sources": [
+      "Aetna Clinical Policy Bulletin \u2014 Dupilumab (Dupixent)",
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "CMS LCD L37209 \u2014 Biologic DMARDs"
+    ]
+  },
+  {
+    "case_id": "PA-002",
+    "true_label": "APPROVE",
+    "insurance_type": "BlueCross PPO",
+    "clinical_category": "glp1_diabetes",
+    "documentation_quality": "strong",
+    "note": "58-year-old male with Type 2 Diabetes Mellitus (E11.9), stage 3a CKD (N18.3), and established CAD (I25.10) post-NSTEMI 2021. HbA1c 9.1% on current regimen. Failed metformin 1000mg BID x 6 months (GI intolerance \u2014 nausea and diarrhea, documented). Failed glipizide 10mg daily x 4 months \u2014 three hypoglycemic episodes requiring glucose administration, discontinued 01/2024. Endocrinology recommends GLP-1 agonist given cardiovascular risk profile and renal considerations. UACR 85 mg/g. eGFR 48.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "E11.9",
+        "I25.10",
+        "N18.3"
+      ],
+      "procedures": [],
+      "drugs_failed": [
+        "metformin 1000mg",
+        "glipizide 10mg"
+      ],
+      "lab_values": {
+        "HbA1c": "9.1%",
+        "eGFR": "48"
+      },
+      "clinical_entities": [
+        "male",
+        "stage 3a",
+        "CAD",
+        "agonist",
+        "renal considerations",
+        "cardiovascular risk profile",
+        "episodes",
+        "GLP-1",
+        "E11.9",
+        "documented"
+      ],
+      "has_prior_therapy_failure": true,
+      "has_specialist_support": true,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: CMS LCD L38956 \u2014 GLP-1 Agonists for T2DM]\nCOVERAGE CRITERIA \u2014 GLP-1 RECEPTOR AGONISTS FOR TYPE 2 DIABETES Indications: Type 2 Diabetes Mellitus with HbA1c above individualized goal despite current oral antidiabetic therapy. Step Therapy: GLP-1 receptor agonists require documentation of prior trial of at least one oral antidiabetic agent at therapeutic dose for a minimum of 3 months, unless contraindicated. Metformin is the preferred first-line agent. High Cardiovascular Risk Indication: For patients with established ASCVD, heart failure, or CKD stage 3+, GLP-1 receptor agonists with demonstrated cardiovascular benefit (semaglutide, liraglutide, dulaglutide) may be authorized earlier in the treatment algorithm consistent with ADA Standards of Care. Required Documentation: Confirmed T2DM diagnosis. Current HbA1c value within 6 months. Documentation of prior oral antidiabetic agent trials. For cardiorenal indication: documentation of ASCVD, HF, or CKD diagnosis.\n\n[Source: Cigna Coverage Policy \u2014 GLP-1 Step Therapy]\nCIGNA STEP THERAPY \u2014 GLP-1 AND DUAL GIP/GLP-1 AGONISTS GLP-1 Receptor Agonists require documentation of ONE of the following: Inadequate glycemic response to metformin plus SGLT-2 inhibitor for minimum 3 months. Documented contraindication or intolerance to SGLT-2 inhibitors. Established ASCVD, HFrEF, or CKD stage 3+ (cardiorenal indication bypasses SGLT-2 step). Dual GIP/GLP-1 Agonists (tirzepatide): same criteria as above plus for obesity indication BMI >= 30 or >= 27 with comorbidity, and 3-month behavioral intervention. Exceptions Process: Step therapy exception may be requested with documentation of clinical urgency, contraindication, or failure at a prior plan within 12 months.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have",
+    "retrieved_sources": [
+      "CMS LCD L38956 \u2014 GLP-1 Agonists for T2DM",
+      "Cigna Coverage Policy \u2014 GLP-1 Step Therapy",
+      "CMS LCD L37209 \u2014 Biologic DMARDs"
+    ]
+  },
+  {
+    "case_id": "PA-003",
+    "true_label": "DENY",
+    "insurance_type": "Cigna EPO",
+    "clinical_category": "imaging",
+    "documentation_quality": "weak",
+    "note": "41-year-old male requesting MRI lumbar spine (CPT 72148) for low back pain (M54.5) of 3-week duration. Pain rated 4/10 at rest. No radicular symptoms, no bowel or bladder dysfunction, no fever, no unexplained weight loss. No prior physical therapy trial documented. No prior imaging. No NSAIDs trialed per medication history.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "M54.5"
+      ],
+      "procedures": [
+        "72148"
+      ],
+      "drugs_failed": [],
+      "lab_values": {},
+      "clinical_entities": [
+        "male",
+        "duration",
+        "medication history",
+        "Pain",
+        "radicular symptoms",
+        "rest",
+        "CPT",
+        "no bowel",
+        "low back pain",
+        "bladder dysfunction"
+      ],
+      "has_prior_therapy_failure": false,
+      "has_specialist_support": false,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: CMS LCD L35091 \u2014 MRI Lumbar Spine]\nCOVERAGE CRITERIA \u2014 MRI LUMBAR SPINE Indications WITHOUT prior conservative therapy (expedited authorization): Neurological deficit: foot drop, bowel/bladder dysfunction, progressive weakness. Red flag symptoms: unexplained weight loss, fever, history of malignancy. Suspected cauda equina syndrome. Prior lumbar surgery with new symptoms. Indications AFTER conservative therapy: Low back pain persisting more than 4-6 weeks. Failure of conservative therapy including physical therapy for minimum 4-6 weeks and trial of anti-inflammatory medications. Clinical findings consistent with radiculopathy: dermatomal pain, positive straight leg raise, motor or sensory deficits. NOT covered without conservative therapy: Acute low back pain under 4 weeks without neurological findings. Non-specific low back pain without red flag symptoms. Required Documentation: Duration and character of symptoms. Neurological exam findings. Documentation of conservative therapy attempted.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have\n\n[Source: Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation]\nCIGNA COVERAGE POLICY \u2014 TRANSCRANIAL MAGNETIC STIMULATION (TMS) Covered Indication: Major Depressive Disorder, moderate to severe (PHQ-9 >= 10). All of the following criteria must be met: Diagnosis of MDD confirmed by a psychiatrist or licensed mental health professional. Inadequate response to at least TWO adequate antidepressant trials, each at therapeutic dose for minimum 6-8 weeks, of different antidepressant classes. PHQ-9 score >= 10 at time of request. No absolute contraindications: ferromagnetic implants, cochlear implants, seizure disorder. Psychiatry evaluation and recommendation. NOT covered: First-line treatment without antidepressant trials. Bipolar disorder alone. Required Documentation: Current PHQ-9 score. Two prior antidepressant trials documented with drug, dose, duration, and response. Psychiatry note supporting TMS.",
+    "retrieved_sources": [
+      "CMS LCD L35091 \u2014 MRI Lumbar Spine",
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation"
+    ]
+  },
+  {
+    "case_id": "PA-004",
+    "true_label": "APPROVE",
+    "insurance_type": "Medicare Advantage (Humana Gold Plus)",
+    "clinical_category": "biologic_rheumatology",
+    "documentation_quality": "strong",
+    "note": "67-year-old female with seropositive rheumatoid arthritis (M05.79), RF positive 148 IU/mL, anti-CCP positive >250 U/mL. DAS28 score 5.6 (high disease activity). Failed methotrexate 20mg weekly x 6 months \u2014 hepatotoxicity, LFTs 3.2x ULN, discontinued 11/2023. Failed hydroxychloroquine 400mg daily x 5 months \u2014 inadequate response, DAS28 unchanged at 5.4. Rheumatology recommends TNF inhibitor therapy. IGRA negative. CXR clear 01/2024. No active infections.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "M05.79"
+      ],
+      "procedures": [],
+      "drugs_failed": [
+        "hydroxychloroquine 400mg",
+        "methotrexate 20mg"
+      ],
+      "lab_values": {
+        "DAS28": "5.6"
+      },
+      "clinical_entities": [
+        "Failed",
+        "DAS28",
+        "IGRA",
+        "unchanged",
+        "CXR",
+        "hepatotoxicity",
+        "TNF",
+        "high disease activity",
+        "ULN",
+        "inhibitor therapy"
+      ],
+      "has_prior_therapy_failure": true,
+      "has_specialist_support": true,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have\n\n[Source: Aetna Clinical Policy Bulletin \u2014 Dupilumab (Dupixent)]\nAETNA COVERAGE CRITERIA \u2014 DUPILUMAB Atopic Dermatitis: Dupilumab is covered when ALL of the following are met: Confirmed diagnosis of moderate-to-severe atopic dermatitis by a dermatologist. EASI score >= 16 OR IGA score >= 3 OR BSA >= 10%. Inadequate response or intolerance to at least two topical therapies: medium-to-high potency topical corticosteroid and topical calcineurin inhibitor. Dermatology specialist evaluation and recommendation. Asthma add-on maintenance: Confirmed moderate-to-severe asthma with FEV1 documented. Eosinophilic phenotype: blood eosinophils >= 150 cells/uL OR FeNO >= 25 ppb. Inadequate response to medium-to-high dose ICS/LABA combination for >= 3 months. Pulmonology evaluation required.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nfor moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have failed one TNF inhibitor may receive authorization for a biologic with a different mechanism without repeat csDMARD trial.",
+    "retrieved_sources": [
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "Aetna Clinical Policy Bulletin \u2014 Dupilumab (Dupixent)",
+      "CMS LCD L37209 \u2014 Biologic DMARDs"
+    ]
+  },
+  {
+    "case_id": "PA-005",
+    "true_label": "DENY",
+    "insurance_type": "Oscar Health",
+    "clinical_category": "genetic_testing",
+    "documentation_quality": "weak",
+    "note": "38-year-old male requesting hereditary cancer gene panel (CPT 81408). No personal cancer history. No first-degree relatives with cancer. Patient reports general health anxiety and read about genetic testing online. No genetic counseling completed. No referral from oncology or genetics. Does not meet NCCN or payer criteria for hereditary cancer syndrome testing.",
+    "predicted_extraction": {
+      "diagnoses": [],
+      "procedures": [
+        "81408"
+      ],
+      "drugs_failed": [],
+      "lab_values": {},
+      "clinical_entities": [
+        "male",
+        "oncology",
+        "cancer history",
+        "cancer",
+        "read",
+        "hereditary cancer syndrome",
+        "genetics",
+        "genetic counseling",
+        "genetic testing",
+        "CPT"
+      ],
+      "has_prior_therapy_failure": false,
+      "has_specialist_support": false,
+      "documentation_gaps": [
+        "does not meet criteria",
+        "no genetic counseling"
+      ]
+    },
+    "policy_context": "[Source: CMS LCD L38072 \u2014 Checkpoint Inhibitor Immunotherapy]\nCOVERAGE CRITERIA \u2014 CHECKPOINT INHIBITOR IMMUNOTHERAPY General Requirements: Confirmed malignancy with pathology report. FDA-approved indication for requested agent and tumor type. ECOG performance status 0-2. Oncology specialist evaluation and tumor board review when applicable. Pembrolizumab NSCLC First Line: Stage IV NSCLC confirmed. PD-L1 TPS >= 50% by validated assay for monotherapy. No actionable EGFR mutation or ALK rearrangement. No prior systemic therapy for metastatic disease. Adequate organ function. Biomarker Testing: PD-L1, TMB, MSI, EGFR, ALK, ROS1 results must be documented. Step Therapy Note: Standard step therapy requirements are waived for oncology agents used per NCCN Category 1 or 2A evidence.\n\n[Source: Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation]\nCIGNA COVERAGE POLICY \u2014 TRANSCRANIAL MAGNETIC STIMULATION (TMS) Covered Indication: Major Depressive Disorder, moderate to severe (PHQ-9 >= 10). All of the following criteria must be met: Diagnosis of MDD confirmed by a psychiatrist or licensed mental health professional. Inadequate response to at least TWO adequate antidepressant trials, each at therapeutic dose for minimum 6-8 weeks, of different antidepressant classes. PHQ-9 score >= 10 at time of request. No absolute contraindications: ferromagnetic implants, cochlear implants, seizure disorder. Psychiatry evaluation and recommendation. NOT covered: First-line treatment without antidepressant trials. Bipolar disorder alone. Required Documentation: Current PHQ-9 score. Two prior antidepressant trials documented with drug, dose, duration, and response. Psychiatry note supporting TMS.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nfor moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have failed one TNF inhibitor may receive authorization for a biologic with a different mechanism without repeat csDMARD trial.",
+    "retrieved_sources": [
+      "CMS LCD L38072 \u2014 Checkpoint Inhibitor Immunotherapy",
+      "Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation",
+      "CMS LCD L37209 \u2014 Biologic DMARDs"
+    ]
+  },
+  {
+    "case_id": "PA-006",
+    "true_label": "PENDING_REVIEW",
+    "insurance_type": "UnitedHealthcare Choice Plus",
+    "clinical_category": "mental_health",
+    "documentation_quality": "strong",
+    "note": "49-year-old female with treatment-resistant major depressive disorder (F33.2). PHQ-9 score 21 (severe). Failed sertraline 200mg x 10 weeks (no response), escitalopram 20mg x 8 weeks (partial response, PHQ-9 18), venlafaxine 225mg x 14 weeks (intolerance \u2014 hypertensive urgency, BP 188/112). No active substance use disorder per AUDIT-C. Psychiatrist at REMS-certified clinic requesting esketamine. Columbia Suicide Severity Rating Scale: moderate ideation, no plan or intent. Current safety plan in place.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "F33.2"
+      ],
+      "procedures": [],
+      "drugs_failed": [
+        "sertraline 200mg"
+      ],
+      "lab_values": {
+        "PHQ-9": "21"
+      },
+      "clinical_entities": [
+        "intent",
+        "safety",
+        "F33.2",
+        "partial response",
+        "venlafaxine",
+        "moderate",
+        "no response",
+        "PHQ-9 18",
+        "ideation",
+        "Suicide Severity Rating Scale"
+      ],
+      "has_prior_therapy_failure": true,
+      "has_specialist_support": false,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation]\nCIGNA COVERAGE POLICY \u2014 TRANSCRANIAL MAGNETIC STIMULATION (TMS) Covered Indication: Major Depressive Disorder, moderate to severe (PHQ-9 >= 10). All of the following criteria must be met: Diagnosis of MDD confirmed by a psychiatrist or licensed mental health professional. Inadequate response to at least TWO adequate antidepressant trials, each at therapeutic dose for minimum 6-8 weeks, of different antidepressant classes. PHQ-9 score >= 10 at time of request. No absolute contraindications: ferromagnetic implants, cochlear implants, seizure disorder. Psychiatry evaluation and recommendation. NOT covered: First-line treatment without antidepressant trials. Bipolar disorder alone. Required Documentation: Current PHQ-9 score. Two prior antidepressant trials documented with drug, dose, duration, and response. Psychiatry note supporting TMS.\n\n[Source: Cigna Coverage Policy \u2014 GLP-1 Step Therapy]\nCIGNA STEP THERAPY \u2014 GLP-1 AND DUAL GIP/GLP-1 AGONISTS GLP-1 Receptor Agonists require documentation of ONE of the following: Inadequate glycemic response to metformin plus SGLT-2 inhibitor for minimum 3 months. Documented contraindication or intolerance to SGLT-2 inhibitors. Established ASCVD, HFrEF, or CKD stage 3+ (cardiorenal indication bypasses SGLT-2 step). Dual GIP/GLP-1 Agonists (tirzepatide): same criteria as above plus for obesity indication BMI >= 30 or >= 27 with comorbidity, and 3-month behavioral intervention. Exceptions Process: Step therapy exception may be requested with documentation of clinical urgency, contraindication, or failure at a prior plan within 12 months.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have",
+    "retrieved_sources": [
+      "Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation",
+      "Cigna Coverage Policy \u2014 GLP-1 Step Therapy",
+      "CMS LCD L37209 \u2014 Biologic DMARDs"
+    ]
+  },
+  {
+    "case_id": "PA-007",
+    "true_label": "APPROVE",
+    "insurance_type": "Molina Healthcare (Medicaid)",
+    "clinical_category": "bariatric_surgery",
+    "documentation_quality": "strong",
+    "note": "34-year-old female requesting laparoscopic Roux-en-Y gastric bypass (CPT 43644). BMI 43.7 kg/m2 with morbid obesity (E66.01). Comorbidities: OSA confirmed by polysomnography (AHI 28, moderate-severe) (G47.33), hypertension on amlodipine 10mg and lisinopril 20mg (I10). Completed 6-month supervised weight loss program per Molina requirement \u2014 monthly visit documentation submitted. Psychological clearance obtained from licensed psychologist 02/2024. Nutritional counseling x 4 sessions completed. No medical contraindications identified by bariatric surgery team.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "I10",
+        "E66.01",
+        "G47.33"
+      ],
+      "procedures": [
+        "43644"
+      ],
+      "drugs_failed": [],
+      "lab_values": {
+        "BMI": "43.7",
+        "AHI": "28"
+      },
+      "clinical_entities": [
+        "monthly",
+        "G47.33",
+        "medical contraindications",
+        "weight loss program",
+        "CPT",
+        "visit documentation",
+        "AHI",
+        "hypertension",
+        "Molina requirement",
+        "Psychological clearance"
+      ],
+      "has_prior_therapy_failure": false,
+      "has_specialist_support": false,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: Molina Healthcare \u2014 Bariatric Surgery Coverage Criteria]\nMOLINA HEALTHCARE COVERAGE CRITERIA \u2014 BARIATRIC SURGERY Covered Procedures: Laparoscopic Roux-en-Y Gastric Bypass (43644), Laparoscopic Sleeve Gastrectomy (43775). All of the following must be documented: BMI >= 40 kg/m2 OR BMI >= 35 with at least one obesity-related comorbidity (T2DM, hypertension, OSA, hyperlipidemia, GERD, osteoarthritis). Completion of medically supervised weight management program: minimum 6 consecutive months with monthly documented visits including dietary counseling. Psychological evaluation and clearance by a licensed mental health professional within 12 months of surgery date. Nutritional counseling: minimum 2 sessions with a registered dietitian. Surgical evaluation with no medical contraindications identified. Age 18 or older.\n\n[Source: Cigna Coverage Policy \u2014 GLP-1 Step Therapy]\nCIGNA STEP THERAPY \u2014 GLP-1 AND DUAL GIP/GLP-1 AGONISTS GLP-1 Receptor Agonists require documentation of ONE of the following: Inadequate glycemic response to metformin plus SGLT-2 inhibitor for minimum 3 months. Documented contraindication or intolerance to SGLT-2 inhibitors. Established ASCVD, HFrEF, or CKD stage 3+ (cardiorenal indication bypasses SGLT-2 step). Dual GIP/GLP-1 Agonists (tirzepatide): same criteria as above plus for obesity indication BMI >= 30 or >= 27 with comorbidity, and 3-month behavioral intervention. Exceptions Process: Step therapy exception may be requested with documentation of clinical urgency, contraindication, or failure at a prior plan within 12 months.\n\n[Source: CMS LCD L38956 \u2014 GLP-1 Agonists for T2DM]\nCOVERAGE CRITERIA \u2014 GLP-1 RECEPTOR AGONISTS FOR TYPE 2 DIABETES Indications: Type 2 Diabetes Mellitus with HbA1c above individualized goal despite current oral antidiabetic therapy. Step Therapy: GLP-1 receptor agonists require documentation of prior trial of at least one oral antidiabetic agent at therapeutic dose for a minimum of 3 months, unless contraindicated. Metformin is the preferred first-line agent. High Cardiovascular Risk Indication: For patients with established ASCVD, heart failure, or CKD stage 3+, GLP-1 receptor agonists with demonstrated cardiovascular benefit (semaglutide, liraglutide, dulaglutide) may be authorized earlier in the treatment algorithm consistent with ADA Standards of Care. Required Documentation: Confirmed T2DM diagnosis. Current HbA1c value within 6 months. Documentation of prior oral antidiabetic agent trials. For cardiorenal indication: documentation of ASCVD, HF, or CKD diagnosis.",
+    "retrieved_sources": [
+      "Molina Healthcare \u2014 Bariatric Surgery Coverage Criteria",
+      "Cigna Coverage Policy \u2014 GLP-1 Step Therapy",
+      "CMS LCD L38956 \u2014 GLP-1 Agonists for T2DM"
+    ]
+  },
+  {
+    "case_id": "PA-008",
+    "true_label": "DENY",
+    "insurance_type": "Aetna HMO",
+    "clinical_category": "biologic_pulmonology",
+    "documentation_quality": "weak",
+    "note": "29-year-old female with severe persistent asthma (J45.51) requesting dupilumab. Currently on albuterol PRN only. No documented trial of inhaled corticosteroid (ICS). No ICS/LABA combination therapy trialed. FEV1 not documented in past 12 months. Eosinophil count not on file. No pulmonology referral. Two ED visits for asthma in past year noted but no outpatient asthma management plan.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "J45.51"
+      ],
+      "procedures": [],
+      "drugs_failed": [
+        "inhaled corticosteroid"
+      ],
+      "lab_values": {},
+      "clinical_entities": [
+        "dupilumab",
+        "file",
+        "inhaled corticosteroid",
+        "ICS/LABA",
+        "PRN",
+        "J45.51",
+        "visits",
+        "referral",
+        "ICS",
+        "documented"
+      ],
+      "has_prior_therapy_failure": false,
+      "has_specialist_support": false,
+      "documentation_gaps": [
+        "no prior therapy documented",
+        "missing lab values",
+        "eosinophil count absent"
+      ]
+    },
+    "policy_context": "[Source: Aetna Clinical Policy Bulletin \u2014 Dupilumab (Dupixent)]\nAETNA COVERAGE CRITERIA \u2014 DUPILUMAB Atopic Dermatitis: Dupilumab is covered when ALL of the following are met: Confirmed diagnosis of moderate-to-severe atopic dermatitis by a dermatologist. EASI score >= 16 OR IGA score >= 3 OR BSA >= 10%. Inadequate response or intolerance to at least two topical therapies: medium-to-high potency topical corticosteroid and topical calcineurin inhibitor. Dermatology specialist evaluation and recommendation. Asthma add-on maintenance: Confirmed moderate-to-severe asthma with FEV1 documented. Eosinophilic phenotype: blood eosinophils >= 150 cells/uL OR FeNO >= 25 ppb. Inadequate response to medium-to-high dose ICS/LABA combination for >= 3 months. Pulmonology evaluation required.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have\n\n[Source: CMS LCD L38956 \u2014 GLP-1 Agonists for T2DM]\nCOVERAGE CRITERIA \u2014 GLP-1 RECEPTOR AGONISTS FOR TYPE 2 DIABETES Indications: Type 2 Diabetes Mellitus with HbA1c above individualized goal despite current oral antidiabetic therapy. Step Therapy: GLP-1 receptor agonists require documentation of prior trial of at least one oral antidiabetic agent at therapeutic dose for a minimum of 3 months, unless contraindicated. Metformin is the preferred first-line agent. High Cardiovascular Risk Indication: For patients with established ASCVD, heart failure, or CKD stage 3+, GLP-1 receptor agonists with demonstrated cardiovascular benefit (semaglutide, liraglutide, dulaglutide) may be authorized earlier in the treatment algorithm consistent with ADA Standards of Care. Required Documentation: Confirmed T2DM diagnosis. Current HbA1c value within 6 months. Documentation of prior oral antidiabetic agent trials. For cardiorenal indication: documentation of ASCVD, HF, or CKD diagnosis.",
+    "retrieved_sources": [
+      "Aetna Clinical Policy Bulletin \u2014 Dupilumab (Dupixent)",
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "CMS LCD L38956 \u2014 GLP-1 Agonists for T2DM"
+    ]
+  },
+  {
+    "case_id": "PA-009",
+    "true_label": "APPROVE",
+    "insurance_type": "Humana Gold Plus (Medicare Advantage)",
+    "clinical_category": "oncology",
+    "documentation_quality": "strong",
+    "note": "74-year-old male with stage IV metastatic NSCLC, left upper lobe primary (C34.12). PD-L1 TPS 82%. No EGFR mutation. No ALK rearrangement. No ROS1 rearrangement. ECOG performance status 1. Oncology tumor board reviewed 02/14/2024 and approved pembrolizumab monotherapy as first-line treatment per KEYNOTE-024 data. Creatinine 1.1, LFTs WNL. No active autoimmune disease. Pulmonary function adequate. Patient counseled on immune-related adverse events and enrolled in Keytruda REMS.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "C34.12"
+      ],
+      "procedures": [],
+      "drugs_failed": [],
+      "lab_values": {
+        "ECOG": "1",
+        "PD-L1": "82%"
+      },
+      "clinical_entities": [
+        "male",
+        "PD-L1",
+        "KEYNOTE-024 data",
+        "immune-related adverse events",
+        "pembrolizumab",
+        "EGFR",
+        "Keytruda REMS",
+        "left upper lobe primary (",
+        "ALK",
+        "Oncology tumor board reviewed 02/14/2024"
+      ],
+      "has_prior_therapy_failure": false,
+      "has_specialist_support": true,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: CMS LCD L38072 \u2014 Checkpoint Inhibitor Immunotherapy]\nCOVERAGE CRITERIA \u2014 CHECKPOINT INHIBITOR IMMUNOTHERAPY General Requirements: Confirmed malignancy with pathology report. FDA-approved indication for requested agent and tumor type. ECOG performance status 0-2. Oncology specialist evaluation and tumor board review when applicable. Pembrolizumab NSCLC First Line: Stage IV NSCLC confirmed. PD-L1 TPS >= 50% by validated assay for monotherapy. No actionable EGFR mutation or ALK rearrangement. No prior systemic therapy for metastatic disease. Adequate organ function. Biomarker Testing: PD-L1, TMB, MSI, EGFR, ALK, ROS1 results must be documented. Step Therapy Note: Standard step therapy requirements are waived for oncology agents used per NCCN Category 1 or 2A evidence.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nfor moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have failed one TNF inhibitor may receive authorization for a biologic with a different mechanism without repeat csDMARD trial.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have",
+    "retrieved_sources": [
+      "CMS LCD L38072 \u2014 Checkpoint Inhibitor Immunotherapy",
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "CMS LCD L37209 \u2014 Biologic DMARDs"
+    ]
+  },
+  {
+    "case_id": "PA-010",
+    "true_label": "PENDING_REVIEW",
+    "insurance_type": "BlueCross BlueShield PPO",
+    "clinical_category": "glp1_obesity",
+    "documentation_quality": "partial",
+    "note": "52-year-old female with Type 2 diabetes (E11.65) and obesity (E66.09), BMI 38.4. HbA1c 8.7%. On metformin 2000mg daily (tolerated, partial response \u2014 HbA1c was 10.1% at initiation). Requesting tirzepatide for dual benefit of glycemic control and weight reduction. Endocrinology note supports. ASCVD risk score 18%. No prior GLP-1 or GIP agonist trial. No prior SGLT-2 inhibitor trial documented.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "E11.65",
+        "E66.09"
+      ],
+      "procedures": [],
+      "drugs_failed": [],
+      "lab_values": {
+        "HbA1c": "8.7%",
+        "BMI": "38.4."
+      },
+      "clinical_entities": [
+        "partial response",
+        "inhibitor",
+        "Endocrinology",
+        "E11.65",
+        "GLP-1",
+        "initiation",
+        "Type 2 diabetes",
+        "GIP",
+        "tolerated",
+        "BMI"
+      ],
+      "has_prior_therapy_failure": true,
+      "has_specialist_support": true,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: Cigna Coverage Policy \u2014 GLP-1 Step Therapy]\nCIGNA STEP THERAPY \u2014 GLP-1 AND DUAL GIP/GLP-1 AGONISTS GLP-1 Receptor Agonists require documentation of ONE of the following: Inadequate glycemic response to metformin plus SGLT-2 inhibitor for minimum 3 months. Documented contraindication or intolerance to SGLT-2 inhibitors. Established ASCVD, HFrEF, or CKD stage 3+ (cardiorenal indication bypasses SGLT-2 step). Dual GIP/GLP-1 Agonists (tirzepatide): same criteria as above plus for obesity indication BMI >= 30 or >= 27 with comorbidity, and 3-month behavioral intervention. Exceptions Process: Step therapy exception may be requested with documentation of clinical urgency, contraindication, or failure at a prior plan within 12 months.\n\n[Source: CMS LCD L38956 \u2014 GLP-1 Agonists for T2DM]\nCOVERAGE CRITERIA \u2014 GLP-1 RECEPTOR AGONISTS FOR TYPE 2 DIABETES Indications: Type 2 Diabetes Mellitus with HbA1c above individualized goal despite current oral antidiabetic therapy. Step Therapy: GLP-1 receptor agonists require documentation of prior trial of at least one oral antidiabetic agent at therapeutic dose for a minimum of 3 months, unless contraindicated. Metformin is the preferred first-line agent. High Cardiovascular Risk Indication: For patients with established ASCVD, heart failure, or CKD stage 3+, GLP-1 receptor agonists with demonstrated cardiovascular benefit (semaglutide, liraglutide, dulaglutide) may be authorized earlier in the treatment algorithm consistent with ADA Standards of Care. Required Documentation: Confirmed T2DM diagnosis. Current HbA1c value within 6 months. Documentation of prior oral antidiabetic agent trials. For cardiorenal indication: documentation of ASCVD, HF, or CKD diagnosis.\n\n[Source: Molina Healthcare \u2014 Bariatric Surgery Coverage Criteria]\nMOLINA HEALTHCARE COVERAGE CRITERIA \u2014 BARIATRIC SURGERY Covered Procedures: Laparoscopic Roux-en-Y Gastric Bypass (43644), Laparoscopic Sleeve Gastrectomy (43775). All of the following must be documented: BMI >= 40 kg/m2 OR BMI >= 35 with at least one obesity-related comorbidity (T2DM, hypertension, OSA, hyperlipidemia, GERD, osteoarthritis). Completion of medically supervised weight management program: minimum 6 consecutive months with monthly documented visits including dietary counseling. Psychological evaluation and clearance by a licensed mental health professional within 12 months of surgery date. Nutritional counseling: minimum 2 sessions with a registered dietitian. Surgical evaluation with no medical contraindications identified. Age 18 or older.",
+    "retrieved_sources": [
+      "Cigna Coverage Policy \u2014 GLP-1 Step Therapy",
+      "CMS LCD L38956 \u2014 GLP-1 Agonists for T2DM",
+      "Molina Healthcare \u2014 Bariatric Surgery Coverage Criteria"
+    ]
+  },
+  {
+    "case_id": "PA-011",
+    "true_label": "APPROVE",
+    "insurance_type": "Cigna HMO",
+    "clinical_category": "biologic_rheumatology",
+    "documentation_quality": "strong",
+    "note": "45-year-old male with psoriatic arthritis (M07.60) and plaque psoriasis (L40.50). PASI score 18.2, BSA 28%, DAS28 4.8. Failed methotrexate 15mg weekly x 6 months \u2014 nausea and oral ulcers, inadequate response (PASI unchanged). Failed sulfasalazine 1g BID x 4 months \u2014 inadequate joint response. Rheumatology and dermatology both support IL-17A inhibitor. No prior TNF inhibitor tried \u2014 requesting IL-17 first line given predominantly skin involvement and prior GI intolerance to methotrexate. Negative TB screening.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "L40.50",
+        "M07.60"
+      ],
+      "procedures": [],
+      "drugs_failed": [
+        "sulfasalazine",
+        "methotrexate 15mg"
+      ],
+      "lab_values": {
+        "DAS28": "4.8."
+      },
+      "clinical_entities": [
+        "male",
+        "skin",
+        "M07.60",
+        "inhibitor",
+        "Failed",
+        "DAS28",
+        "unchanged",
+        "requesting",
+        "Negative",
+        "dermatology"
+      ],
+      "has_prior_therapy_failure": true,
+      "has_specialist_support": false,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nfor moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have failed one TNF inhibitor may receive authorization for a biologic with a different mechanism without repeat csDMARD trial.\n\n[Source: Aetna Clinical Policy Bulletin \u2014 Dupilumab (Dupixent)]\nAETNA COVERAGE CRITERIA \u2014 DUPILUMAB Atopic Dermatitis: Dupilumab is covered when ALL of the following are met: Confirmed diagnosis of moderate-to-severe atopic dermatitis by a dermatologist. EASI score >= 16 OR IGA score >= 3 OR BSA >= 10%. Inadequate response or intolerance to at least two topical therapies: medium-to-high potency topical corticosteroid and topical calcineurin inhibitor. Dermatology specialist evaluation and recommendation. Asthma add-on maintenance: Confirmed moderate-to-severe asthma with FEV1 documented. Eosinophilic phenotype: blood eosinophils >= 150 cells/uL OR FeNO >= 25 ppb. Inadequate response to medium-to-high dose ICS/LABA combination for >= 3 months. Pulmonology evaluation required.",
+    "retrieved_sources": [
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "Aetna Clinical Policy Bulletin \u2014 Dupilumab (Dupixent)"
+    ]
+  },
+  {
+    "case_id": "PA-012",
+    "true_label": "APPROVE",
+    "insurance_type": "UnitedHealthcare Medicaid",
+    "clinical_category": "imaging",
+    "documentation_quality": "strong",
+    "note": "55-year-old male with low back pain with left-sided radiculopathy (M54.42) radiating to L4-L5 dermatomal distribution. Positive straight leg raise at 40 degrees. Foot drop noted on neurological exam (weakness 3/5 left EHL). Duration 8 weeks. No improvement with 6 weeks of PT (10 sessions documented). Ibuprofen 600mg TID trialed \u2014 partial response only. Requesting MRI lumbar spine prior to neurosurgery referral.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "M54.42"
+      ],
+      "procedures": [],
+      "drugs_failed": [],
+      "lab_values": {},
+      "clinical_entities": [
+        "male",
+        "EHL",
+        "Foot drop",
+        "distribution",
+        "partial",
+        "TID",
+        "leg",
+        "Ibuprofen",
+        "low back pain",
+        "documented"
+      ],
+      "has_prior_therapy_failure": true,
+      "has_specialist_support": false,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: CMS LCD L35091 \u2014 MRI Lumbar Spine]\nCOVERAGE CRITERIA \u2014 MRI LUMBAR SPINE Indications WITHOUT prior conservative therapy (expedited authorization): Neurological deficit: foot drop, bowel/bladder dysfunction, progressive weakness. Red flag symptoms: unexplained weight loss, fever, history of malignancy. Suspected cauda equina syndrome. Prior lumbar surgery with new symptoms. Indications AFTER conservative therapy: Low back pain persisting more than 4-6 weeks. Failure of conservative therapy including physical therapy for minimum 4-6 weeks and trial of anti-inflammatory medications. Clinical findings consistent with radiculopathy: dermatomal pain, positive straight leg raise, motor or sensory deficits. NOT covered without conservative therapy: Acute low back pain under 4 weeks without neurological findings. Non-specific low back pain without red flag symptoms. Required Documentation: Duration and character of symptoms. Neurological exam findings. Documentation of conservative therapy attempted.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nfor moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have failed one TNF inhibitor may receive authorization for a biologic with a different mechanism without repeat csDMARD trial.",
+    "retrieved_sources": [
+      "CMS LCD L35091 \u2014 MRI Lumbar Spine",
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "CMS LCD L37209 \u2014 Biologic DMARDs"
+    ]
+  },
+  {
+    "case_id": "PA-013",
+    "true_label": "APPROVE",
+    "insurance_type": "Anthem BCBS PPO",
+    "clinical_category": "mental_health",
+    "documentation_quality": "strong",
+    "note": "32-year-old male with schizophrenia (F20.9), two hospitalizations in past 18 months secondary to medication non-adherence with oral antipsychotics. Currently on oral aripiprazole 15mg daily \u2014 adequate symptom control when adherent. Psychiatry documents ongoing non-adherence pattern (missed doses >50% per pill count). PANSS score 62 at last visit. Long-acting injectable requested to address adherence barrier. No metabolic contraindications. Weight stable.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "F20.9"
+      ],
+      "procedures": [],
+      "drugs_failed": [],
+      "lab_values": {
+        "PANSS": "62"
+      },
+      "clinical_entities": [
+        "male",
+        "aripiprazole",
+        "symptom control",
+        "antipsychotics",
+        "non-adherence pattern",
+        "adherent",
+        "Long-acting injectable",
+        "oral",
+        "Psychiatry documents",
+        "hospitalizations"
+      ],
+      "has_prior_therapy_failure": false,
+      "has_specialist_support": false,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation]\nCIGNA COVERAGE POLICY \u2014 TRANSCRANIAL MAGNETIC STIMULATION (TMS) Covered Indication: Major Depressive Disorder, moderate to severe (PHQ-9 >= 10). All of the following criteria must be met: Diagnosis of MDD confirmed by a psychiatrist or licensed mental health professional. Inadequate response to at least TWO adequate antidepressant trials, each at therapeutic dose for minimum 6-8 weeks, of different antidepressant classes. PHQ-9 score >= 10 at time of request. No absolute contraindications: ferromagnetic implants, cochlear implants, seizure disorder. Psychiatry evaluation and recommendation. NOT covered: First-line treatment without antidepressant trials. Bipolar disorder alone. Required Documentation: Current PHQ-9 score. Two prior antidepressant trials documented with drug, dose, duration, and response. Psychiatry note supporting TMS.\n\n[Source: Cigna Coverage Policy \u2014 GLP-1 Step Therapy]\nCIGNA STEP THERAPY \u2014 GLP-1 AND DUAL GIP/GLP-1 AGONISTS GLP-1 Receptor Agonists require documentation of ONE of the following: Inadequate glycemic response to metformin plus SGLT-2 inhibitor for minimum 3 months. Documented contraindication or intolerance to SGLT-2 inhibitors. Established ASCVD, HFrEF, or CKD stage 3+ (cardiorenal indication bypasses SGLT-2 step). Dual GIP/GLP-1 Agonists (tirzepatide): same criteria as above plus for obesity indication BMI >= 30 or >= 27 with comorbidity, and 3-month behavioral intervention. Exceptions Process: Step therapy exception may be requested with documentation of clinical urgency, contraindication, or failure at a prior plan within 12 months.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have",
+    "retrieved_sources": [
+      "Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation",
+      "Cigna Coverage Policy \u2014 GLP-1 Step Therapy",
+      "CMS LCD L37209 \u2014 Biologic DMARDs"
+    ]
+  },
+  {
+    "case_id": "PA-014",
+    "true_label": "DENY",
+    "insurance_type": "Cigna PPO",
+    "clinical_category": "glp1_diabetes",
+    "documentation_quality": "weak",
+    "note": "61-year-old male with Type 2 diabetes (E11.9). HbA1c 7.8%. Currently on metformin 1000mg BID. Requesting dulaglutide. No documented failure of SGLT-2 inhibitor. No documented cardiovascular disease, CKD, or heart failure. Physician note states patient 'prefers injectable.' BMI 29.1.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "E11.9"
+      ],
+      "procedures": [],
+      "drugs_failed": [],
+      "lab_values": {
+        "HbA1c": "7.8%",
+        "BMI": "29.1."
+      },
+      "clinical_entities": [
+        "Requesting dulaglutide",
+        "male",
+        "E11.9",
+        "SGLT-2",
+        "Type 2 diabetes",
+        "BID",
+        "inhibitor",
+        "No documented",
+        "prefers",
+        "heart failure"
+      ],
+      "has_prior_therapy_failure": false,
+      "has_specialist_support": false,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: CMS LCD L38956 \u2014 GLP-1 Agonists for T2DM]\nCOVERAGE CRITERIA \u2014 GLP-1 RECEPTOR AGONISTS FOR TYPE 2 DIABETES Indications: Type 2 Diabetes Mellitus with HbA1c above individualized goal despite current oral antidiabetic therapy. Step Therapy: GLP-1 receptor agonists require documentation of prior trial of at least one oral antidiabetic agent at therapeutic dose for a minimum of 3 months, unless contraindicated. Metformin is the preferred first-line agent. High Cardiovascular Risk Indication: For patients with established ASCVD, heart failure, or CKD stage 3+, GLP-1 receptor agonists with demonstrated cardiovascular benefit (semaglutide, liraglutide, dulaglutide) may be authorized earlier in the treatment algorithm consistent with ADA Standards of Care. Required Documentation: Confirmed T2DM diagnosis. Current HbA1c value within 6 months. Documentation of prior oral antidiabetic agent trials. For cardiorenal indication: documentation of ASCVD, HF, or CKD diagnosis.\n\n[Source: Cigna Coverage Policy \u2014 GLP-1 Step Therapy]\nCIGNA STEP THERAPY \u2014 GLP-1 AND DUAL GIP/GLP-1 AGONISTS GLP-1 Receptor Agonists require documentation of ONE of the following: Inadequate glycemic response to metformin plus SGLT-2 inhibitor for minimum 3 months. Documented contraindication or intolerance to SGLT-2 inhibitors. Established ASCVD, HFrEF, or CKD stage 3+ (cardiorenal indication bypasses SGLT-2 step). Dual GIP/GLP-1 Agonists (tirzepatide): same criteria as above plus for obesity indication BMI >= 30 or >= 27 with comorbidity, and 3-month behavioral intervention. Exceptions Process: Step therapy exception may be requested with documentation of clinical urgency, contraindication, or failure at a prior plan within 12 months.\n\n[Source: Aetna Clinical Policy Bulletin \u2014 Dupilumab (Dupixent)]\nAETNA COVERAGE CRITERIA \u2014 DUPILUMAB Atopic Dermatitis: Dupilumab is covered when ALL of the following are met: Confirmed diagnosis of moderate-to-severe atopic dermatitis by a dermatologist. EASI score >= 16 OR IGA score >= 3 OR BSA >= 10%. Inadequate response or intolerance to at least two topical therapies: medium-to-high potency topical corticosteroid and topical calcineurin inhibitor. Dermatology specialist evaluation and recommendation. Asthma add-on maintenance: Confirmed moderate-to-severe asthma with FEV1 documented. Eosinophilic phenotype: blood eosinophils >= 150 cells/uL OR FeNO >= 25 ppb. Inadequate response to medium-to-high dose ICS/LABA combination for >= 3 months. Pulmonology evaluation required.",
+    "retrieved_sources": [
+      "CMS LCD L38956 \u2014 GLP-1 Agonists for T2DM",
+      "Cigna Coverage Policy \u2014 GLP-1 Step Therapy",
+      "Aetna Clinical Policy Bulletin \u2014 Dupilumab (Dupixent)"
+    ]
+  },
+  {
+    "case_id": "PA-015",
+    "true_label": "APPROVE",
+    "insurance_type": "BlueCross Medicaid",
+    "clinical_category": "infusion_neurology",
+    "documentation_quality": "strong",
+    "note": "43-year-old female with Guillain-Barr\u00e9 syndrome, relapsing form / CIDP confirmed (G61.0). Nerve conduction study 01/2024 confirms demyelinating polyneuropathy. Neurology at academic medical center recommends IVIG maintenance therapy. Failed corticosteroids \u2014 prednisone 60mg daily x 8 weeks, inadequate response and significant weight gain (+22 lbs). Failed plasmapheresis x 5 sessions \u2014 partial response only, relapsed within 4 weeks. Functional status MRC sum score 42/60. IgA level normal (rules out IgA deficiency contraindication).",
+    "predicted_extraction": {
+      "diagnoses": [
+        "G61.0"
+      ],
+      "procedures": [],
+      "drugs_failed": [
+        "plasmapheresis x",
+        "corticosteroids"
+      ],
+      "lab_values": {},
+      "clinical_entities": [
+        "IgA",
+        "CIDP",
+        "partial response",
+        "corticosteroids",
+        "confirms",
+        "Failed",
+        "demyelinating polyneuropathy",
+        "lbs",
+        "IVIG maintenance therapy",
+        "Functional status MRC sum score"
+      ],
+      "has_prior_therapy_failure": true,
+      "has_specialist_support": true,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: Cigna Coverage Policy \u2014 GLP-1 Step Therapy]\nCIGNA STEP THERAPY \u2014 GLP-1 AND DUAL GIP/GLP-1 AGONISTS GLP-1 Receptor Agonists require documentation of ONE of the following: Inadequate glycemic response to metformin plus SGLT-2 inhibitor for minimum 3 months. Documented contraindication or intolerance to SGLT-2 inhibitors. Established ASCVD, HFrEF, or CKD stage 3+ (cardiorenal indication bypasses SGLT-2 step). Dual GIP/GLP-1 Agonists (tirzepatide): same criteria as above plus for obesity indication BMI >= 30 or >= 27 with comorbidity, and 3-month behavioral intervention. Exceptions Process: Step therapy exception may be requested with documentation of clinical urgency, contraindication, or failure at a prior plan within 12 months.\n\n[Source: Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation]\nCIGNA COVERAGE POLICY \u2014 TRANSCRANIAL MAGNETIC STIMULATION (TMS) Covered Indication: Major Depressive Disorder, moderate to severe (PHQ-9 >= 10). All of the following criteria must be met: Diagnosis of MDD confirmed by a psychiatrist or licensed mental health professional. Inadequate response to at least TWO adequate antidepressant trials, each at therapeutic dose for minimum 6-8 weeks, of different antidepressant classes. PHQ-9 score >= 10 at time of request. No absolute contraindications: ferromagnetic implants, cochlear implants, seizure disorder. Psychiatry evaluation and recommendation. NOT covered: First-line treatment without antidepressant trials. Bipolar disorder alone. Required Documentation: Current PHQ-9 score. Two prior antidepressant trials documented with drug, dose, duration, and response. Psychiatry note supporting TMS.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have",
+    "retrieved_sources": [
+      "Cigna Coverage Policy \u2014 GLP-1 Step Therapy",
+      "Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation",
+      "CMS LCD L37209 \u2014 Biologic DMARDs"
+    ]
+  },
+  {
+    "case_id": "PA-016",
+    "true_label": "APPROVE",
+    "insurance_type": "Aetna PPO",
+    "clinical_category": "biologic_gastroenterology",
+    "documentation_quality": "strong",
+    "note": "38-year-old male with moderate-to-severe Crohn's disease (K50.10). Harvey-Bradshaw Index 12. Failed mesalamine \u2014 not appropriate for Crohn's per GI note. Failed azathioprine 2.5mg/kg x 5 months (leukopenia, WBC 2.8). Failed adalimumab 160/80/40mg \u2014 secondary loss of response after 14 months, fecal calprotectin rising to 1840 ug/g. Gastroenterology recommends vedolizumab given gut-selective mechanism and prior TNF failure. CRP 18.2. Colonoscopy 01/2024: deep ulcerations ileum and right colon.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "K50.10"
+      ],
+      "procedures": [],
+      "drugs_failed": [
+        "mesalamine",
+        "azathioprine",
+        "adalimumab"
+      ],
+      "lab_values": {},
+      "clinical_entities": [
+        "right colon",
+        "male",
+        "Failed",
+        "azathioprine",
+        "adalimumab",
+        "secondary loss of response",
+        "Harvey-Bradshaw Index",
+        "Colonoscopy 01/2024",
+        "Crohn's per",
+        "K50.10"
+      ],
+      "has_prior_therapy_failure": true,
+      "has_specialist_support": true,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have\n\n[Source: Cigna Coverage Policy \u2014 GLP-1 Step Therapy]\nCIGNA STEP THERAPY \u2014 GLP-1 AND DUAL GIP/GLP-1 AGONISTS GLP-1 Receptor Agonists require documentation of ONE of the following: Inadequate glycemic response to metformin plus SGLT-2 inhibitor for minimum 3 months. Documented contraindication or intolerance to SGLT-2 inhibitors. Established ASCVD, HFrEF, or CKD stage 3+ (cardiorenal indication bypasses SGLT-2 step). Dual GIP/GLP-1 Agonists (tirzepatide): same criteria as above plus for obesity indication BMI >= 30 or >= 27 with comorbidity, and 3-month behavioral intervention. Exceptions Process: Step therapy exception may be requested with documentation of clinical urgency, contraindication, or failure at a prior plan within 12 months.\n\n[Source: CMS LCD L38956 \u2014 GLP-1 Agonists for T2DM]\nCOVERAGE CRITERIA \u2014 GLP-1 RECEPTOR AGONISTS FOR TYPE 2 DIABETES Indications: Type 2 Diabetes Mellitus with HbA1c above individualized goal despite current oral antidiabetic therapy. Step Therapy: GLP-1 receptor agonists require documentation of prior trial of at least one oral antidiabetic agent at therapeutic dose for a minimum of 3 months, unless contraindicated. Metformin is the preferred first-line agent. High Cardiovascular Risk Indication: For patients with established ASCVD, heart failure, or CKD stage 3+, GLP-1 receptor agonists with demonstrated cardiovascular benefit (semaglutide, liraglutide, dulaglutide) may be authorized earlier in the treatment algorithm consistent with ADA Standards of Care. Required Documentation: Confirmed T2DM diagnosis. Current HbA1c value within 6 months. Documentation of prior oral antidiabetic agent trials. For cardiorenal indication: documentation of ASCVD, HF, or CKD diagnosis.",
+    "retrieved_sources": [
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "Cigna Coverage Policy \u2014 GLP-1 Step Therapy",
+      "CMS LCD L38956 \u2014 GLP-1 Agonists for T2DM"
+    ]
+  },
+  {
+    "case_id": "PA-017",
+    "true_label": "DENY",
+    "insurance_type": "Oscar Health",
+    "clinical_category": "imaging",
+    "documentation_quality": "weak",
+    "note": "68-year-old male with BPH (N40.1) and urinary retention (R33.8). PSA 6.8 ng/mL (age-adjusted borderline). Requesting CT abdomen/pelvis with contrast (CPT 74178). No urology referral. Requesting CT rather than ultrasound renal/bladder which is first-line for BPH evaluation. No prior imaging. Urodynamic testing not completed.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "R33.8",
+        "N40.1"
+      ],
+      "procedures": [
+        "74178"
+      ],
+      "drugs_failed": [],
+      "lab_values": {},
+      "clinical_entities": [
+        "male",
+        "Urodynamic testing",
+        "BPH",
+        "PSA",
+        "age-adjusted borderline",
+        "referral",
+        "ultrasound",
+        "No prior imaging",
+        "R33.8",
+        "N40.1"
+      ],
+      "has_prior_therapy_failure": false,
+      "has_specialist_support": false,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation]\nCIGNA COVERAGE POLICY \u2014 TRANSCRANIAL MAGNETIC STIMULATION (TMS) Covered Indication: Major Depressive Disorder, moderate to severe (PHQ-9 >= 10). All of the following criteria must be met: Diagnosis of MDD confirmed by a psychiatrist or licensed mental health professional. Inadequate response to at least TWO adequate antidepressant trials, each at therapeutic dose for minimum 6-8 weeks, of different antidepressant classes. PHQ-9 score >= 10 at time of request. No absolute contraindications: ferromagnetic implants, cochlear implants, seizure disorder. Psychiatry evaluation and recommendation. NOT covered: First-line treatment without antidepressant trials. Bipolar disorder alone. Required Documentation: Current PHQ-9 score. Two prior antidepressant trials documented with drug, dose, duration, and response. Psychiatry note supporting TMS.\n\n[Source: CMS LCD L35091 \u2014 MRI Lumbar Spine]\nCOVERAGE CRITERIA \u2014 MRI LUMBAR SPINE Indications WITHOUT prior conservative therapy (expedited authorization): Neurological deficit: foot drop, bowel/bladder dysfunction, progressive weakness. Red flag symptoms: unexplained weight loss, fever, history of malignancy. Suspected cauda equina syndrome. Prior lumbar surgery with new symptoms. Indications AFTER conservative therapy: Low back pain persisting more than 4-6 weeks. Failure of conservative therapy including physical therapy for minimum 4-6 weeks and trial of anti-inflammatory medications. Clinical findings consistent with radiculopathy: dermatomal pain, positive straight leg raise, motor or sensory deficits. NOT covered without conservative therapy: Acute low back pain under 4 weeks without neurological findings. Non-specific low back pain without red flag symptoms. Required Documentation: Duration and character of symptoms. Neurological exam findings. Documentation of conservative therapy attempted.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nfor moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have failed one TNF inhibitor may receive authorization for a biologic with a different mechanism without repeat csDMARD trial.",
+    "retrieved_sources": [
+      "Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation",
+      "CMS LCD L35091 \u2014 MRI Lumbar Spine",
+      "CMS LCD L37209 \u2014 Biologic DMARDs"
+    ]
+  },
+  {
+    "case_id": "PA-018",
+    "true_label": "APPROVE",
+    "insurance_type": "Humana PPO",
+    "clinical_category": "oncology",
+    "documentation_quality": "strong",
+    "note": "54-year-old female with metastatic breast cancer (C50.912), BRCA1 germline pathogenic variant confirmed (Z15.01). ER+/HER2-negative. Prior lines: letrozole (progression), palbociclib + fulvestrant (progression at 14 months). Oncology requesting olaparib as third-line based on OlympiAD trial data. ECOG 1. Creatinine 0.9, adequate marrow reserve (ANC 2.1, Hgb 10.8). Genetic counseling completed.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "C50.912",
+        "Z15.01"
+      ],
+      "procedures": [],
+      "drugs_failed": [],
+      "lab_values": {
+        "ECOG": "1"
+      },
+      "clinical_entities": [
+        "Oncology requesting olaparib",
+        "OlympiAD trial",
+        "C50.912",
+        "fulvestrant",
+        "BRCA1",
+        "Creatinine",
+        "ER+/HER2-negative",
+        "Z15.01",
+        "data",
+        "third-line"
+      ],
+      "has_prior_therapy_failure": false,
+      "has_specialist_support": false,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: CMS LCD L38072 \u2014 Checkpoint Inhibitor Immunotherapy]\nCOVERAGE CRITERIA \u2014 CHECKPOINT INHIBITOR IMMUNOTHERAPY General Requirements: Confirmed malignancy with pathology report. FDA-approved indication for requested agent and tumor type. ECOG performance status 0-2. Oncology specialist evaluation and tumor board review when applicable. Pembrolizumab NSCLC First Line: Stage IV NSCLC confirmed. PD-L1 TPS >= 50% by validated assay for monotherapy. No actionable EGFR mutation or ALK rearrangement. No prior systemic therapy for metastatic disease. Adequate organ function. Biomarker Testing: PD-L1, TMB, MSI, EGFR, ALK, ROS1 results must be documented. Step Therapy Note: Standard step therapy requirements are waived for oncology agents used per NCCN Category 1 or 2A evidence.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nfor moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have failed one TNF inhibitor may receive authorization for a biologic with a different mechanism without repeat csDMARD trial.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have",
+    "retrieved_sources": [
+      "CMS LCD L38072 \u2014 Checkpoint Inhibitor Immunotherapy",
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "CMS LCD L37209 \u2014 Biologic DMARDs"
+    ]
+  },
+  {
+    "case_id": "PA-019",
+    "true_label": "DENY",
+    "insurance_type": "Cigna HMO",
+    "clinical_category": "mental_health",
+    "documentation_quality": "weak",
+    "note": "44-year-old female with moderate MDD (F33.1). PHQ-9 score 14. On sertraline 100mg \u2014 first antidepressant trial, 6 weeks in. Requesting TMS immediately. No prior augmentation strategies tried. No referral to psychiatry. No documented contraindications to continuing pharmacotherapy.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "F33.1"
+      ],
+      "procedures": [],
+      "drugs_failed": [],
+      "lab_values": {
+        "PHQ-9": "14"
+      },
+      "clinical_entities": [
+        "contraindications",
+        "female",
+        "continuing pharmacotherapy",
+        "moderate",
+        "psychiatry",
+        "augmentation strategies",
+        "TMS",
+        "weeks",
+        "F33.1",
+        "MDD"
+      ],
+      "has_prior_therapy_failure": false,
+      "has_specialist_support": false,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation]\nCIGNA COVERAGE POLICY \u2014 TRANSCRANIAL MAGNETIC STIMULATION (TMS) Covered Indication: Major Depressive Disorder, moderate to severe (PHQ-9 >= 10). All of the following criteria must be met: Diagnosis of MDD confirmed by a psychiatrist or licensed mental health professional. Inadequate response to at least TWO adequate antidepressant trials, each at therapeutic dose for minimum 6-8 weeks, of different antidepressant classes. PHQ-9 score >= 10 at time of request. No absolute contraindications: ferromagnetic implants, cochlear implants, seizure disorder. Psychiatry evaluation and recommendation. NOT covered: First-line treatment without antidepressant trials. Bipolar disorder alone. Required Documentation: Current PHQ-9 score. Two prior antidepressant trials documented with drug, dose, duration, and response. Psychiatry note supporting TMS.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nfor moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have failed one TNF inhibitor may receive authorization for a biologic with a different mechanism without repeat csDMARD trial.",
+    "retrieved_sources": [
+      "Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation",
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "CMS LCD L37209 \u2014 Biologic DMARDs"
+    ]
+  },
+  {
+    "case_id": "PA-020",
+    "true_label": "APPROVE",
+    "insurance_type": "UnitedHealthcare PPO",
+    "clinical_category": "biologic_dermatology",
+    "documentation_quality": "strong",
+    "note": "36-year-old male with severe plaque psoriasis (L40.0). PASI 22, DLQI 19, BSA 40%. Failed methotrexate 20mg weekly x 12 weeks \u2014 hepatotoxicity (LFTs 2.8x ULN). Failed narrowband UVB phototherapy x 24 sessions \u2014 inadequate response, PASI unchanged. Failed adalimumab 40mg q2w x 20 weeks \u2014 loss of response, PASI rebounded from 9 to 19. Dermatology at academic center supports IL-17A inhibitor as third-line. Negative TB, no active infections.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "L40.0"
+      ],
+      "procedures": [],
+      "drugs_failed": [
+        "methotrexate 20mg",
+        "adalimumab 40mg",
+        "narrowband UVB"
+      ],
+      "lab_values": {
+        "PASI": "22",
+        "DLQI": "19"
+      },
+      "clinical_entities": [
+        "male",
+        "loss of response",
+        "Failed",
+        "unchanged",
+        "adalimumab",
+        "narrowband",
+        "hepatotoxicity",
+        "BSA",
+        "ULN",
+        "IL-17A inhibitor"
+      ],
+      "has_prior_therapy_failure": true,
+      "has_specialist_support": true,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have\n\n[Source: Aetna Clinical Policy Bulletin \u2014 Dupilumab (Dupixent)]\nAETNA COVERAGE CRITERIA \u2014 DUPILUMAB Atopic Dermatitis: Dupilumab is covered when ALL of the following are met: Confirmed diagnosis of moderate-to-severe atopic dermatitis by a dermatologist. EASI score >= 16 OR IGA score >= 3 OR BSA >= 10%. Inadequate response or intolerance to at least two topical therapies: medium-to-high potency topical corticosteroid and topical calcineurin inhibitor. Dermatology specialist evaluation and recommendation. Asthma add-on maintenance: Confirmed moderate-to-severe asthma with FEV1 documented. Eosinophilic phenotype: blood eosinophils >= 150 cells/uL OR FeNO >= 25 ppb. Inadequate response to medium-to-high dose ICS/LABA combination for >= 3 months. Pulmonology evaluation required.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nfor moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have failed one TNF inhibitor may receive authorization for a biologic with a different mechanism without repeat csDMARD trial.",
+    "retrieved_sources": [
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "Aetna Clinical Policy Bulletin \u2014 Dupilumab (Dupixent)",
+      "CMS LCD L37209 \u2014 Biologic DMARDs"
+    ]
+  },
+  {
+    "case_id": "PA-021",
+    "true_label": "APPROVE",
+    "insurance_type": "Aetna HMO",
+    "clinical_category": "glp1_obesity",
+    "documentation_quality": "strong",
+    "note": "47-year-old female with morbid obesity (E66.01, BMI 41.2), hypertension (I10), and hyperlipidemia (E78.5). Requesting semaglutide 2.4mg for chronic weight management. Completed 6-month lifestyle intervention program (documented monthly visits). BMI qualifies at 41.2 (threshold \u226530 with comorbidity or \u226540 without). Two comorbidities present. No prior GLP-1 agonist for obesity. Endocrinology supportive.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "E78.5",
+        "I10",
+        "E66.01"
+      ],
+      "procedures": [],
+      "drugs_failed": [],
+      "lab_values": {
+        "BMI": "41.2"
+      },
+      "clinical_entities": [
+        "lifestyle intervention program",
+        "Requesting semaglutide",
+        "agonist",
+        "hyperlipidemia",
+        "present",
+        "GLP-1",
+        "hypertension",
+        "visits",
+        "BMI",
+        "documented"
+      ],
+      "has_prior_therapy_failure": false,
+      "has_specialist_support": true,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: Cigna Coverage Policy \u2014 GLP-1 Step Therapy]\nCIGNA STEP THERAPY \u2014 GLP-1 AND DUAL GIP/GLP-1 AGONISTS GLP-1 Receptor Agonists require documentation of ONE of the following: Inadequate glycemic response to metformin plus SGLT-2 inhibitor for minimum 3 months. Documented contraindication or intolerance to SGLT-2 inhibitors. Established ASCVD, HFrEF, or CKD stage 3+ (cardiorenal indication bypasses SGLT-2 step). Dual GIP/GLP-1 Agonists (tirzepatide): same criteria as above plus for obesity indication BMI >= 30 or >= 27 with comorbidity, and 3-month behavioral intervention. Exceptions Process: Step therapy exception may be requested with documentation of clinical urgency, contraindication, or failure at a prior plan within 12 months.\n\n[Source: CMS LCD L38956 \u2014 GLP-1 Agonists for T2DM]\nCOVERAGE CRITERIA \u2014 GLP-1 RECEPTOR AGONISTS FOR TYPE 2 DIABETES Indications: Type 2 Diabetes Mellitus with HbA1c above individualized goal despite current oral antidiabetic therapy. Step Therapy: GLP-1 receptor agonists require documentation of prior trial of at least one oral antidiabetic agent at therapeutic dose for a minimum of 3 months, unless contraindicated. Metformin is the preferred first-line agent. High Cardiovascular Risk Indication: For patients with established ASCVD, heart failure, or CKD stage 3+, GLP-1 receptor agonists with demonstrated cardiovascular benefit (semaglutide, liraglutide, dulaglutide) may be authorized earlier in the treatment algorithm consistent with ADA Standards of Care. Required Documentation: Confirmed T2DM diagnosis. Current HbA1c value within 6 months. Documentation of prior oral antidiabetic agent trials. For cardiorenal indication: documentation of ASCVD, HF, or CKD diagnosis.\n\n[Source: Molina Healthcare \u2014 Bariatric Surgery Coverage Criteria]\nMOLINA HEALTHCARE COVERAGE CRITERIA \u2014 BARIATRIC SURGERY Covered Procedures: Laparoscopic Roux-en-Y Gastric Bypass (43644), Laparoscopic Sleeve Gastrectomy (43775). All of the following must be documented: BMI >= 40 kg/m2 OR BMI >= 35 with at least one obesity-related comorbidity (T2DM, hypertension, OSA, hyperlipidemia, GERD, osteoarthritis). Completion of medically supervised weight management program: minimum 6 consecutive months with monthly documented visits including dietary counseling. Psychological evaluation and clearance by a licensed mental health professional within 12 months of surgery date. Nutritional counseling: minimum 2 sessions with a registered dietitian. Surgical evaluation with no medical contraindications identified. Age 18 or older.",
+    "retrieved_sources": [
+      "Cigna Coverage Policy \u2014 GLP-1 Step Therapy",
+      "CMS LCD L38956 \u2014 GLP-1 Agonists for T2DM",
+      "Molina Healthcare \u2014 Bariatric Surgery Coverage Criteria"
+    ]
+  },
+  {
+    "case_id": "PA-022",
+    "true_label": "APPROVE",
+    "insurance_type": "Molina Medicaid",
+    "clinical_category": "infusion_hematology",
+    "documentation_quality": "strong",
+    "note": "28-year-old male with paroxysmal nocturnal hemoglobinuria (D59.5) confirmed by flow cytometry (clone size 72%). LDH 4.8x ULN. Two thrombotic events in past 18 months (DVT, portal vein thrombosis). On anticoagulation. Hematology at tertiary center recommends eculizumab. Meningococcal vaccination series completed. No prior complement inhibitor therapy \u2014 eculizumab is first-line per PNH guidelines.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "D59.5"
+      ],
+      "procedures": [],
+      "drugs_failed": [],
+      "lab_values": {
+        "LDH": "4.8x ULN"
+      },
+      "clinical_entities": [
+        "male",
+        "anticoagulation",
+        "PNH",
+        "tertiary center recommends",
+        "portal vein thrombosis",
+        "eculizumab",
+        "thrombotic events",
+        "Hematology",
+        "LDH",
+        "ULN"
+      ],
+      "has_prior_therapy_failure": false,
+      "has_specialist_support": true,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nfor moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have failed one TNF inhibitor may receive authorization for a biologic with a different mechanism without repeat csDMARD trial.\n\n[Source: CMS LCD L38072 \u2014 Checkpoint Inhibitor Immunotherapy]\nCOVERAGE CRITERIA \u2014 CHECKPOINT INHIBITOR IMMUNOTHERAPY General Requirements: Confirmed malignancy with pathology report. FDA-approved indication for requested agent and tumor type. ECOG performance status 0-2. Oncology specialist evaluation and tumor board review when applicable. Pembrolizumab NSCLC First Line: Stage IV NSCLC confirmed. PD-L1 TPS >= 50% by validated assay for monotherapy. No actionable EGFR mutation or ALK rearrangement. No prior systemic therapy for metastatic disease. Adequate organ function. Biomarker Testing: PD-L1, TMB, MSI, EGFR, ALK, ROS1 results must be documented. Step Therapy Note: Standard step therapy requirements are waived for oncology agents used per NCCN Category 1 or 2A evidence.",
+    "retrieved_sources": [
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "CMS LCD L38072 \u2014 Checkpoint Inhibitor Immunotherapy"
+    ]
+  },
+  {
+    "case_id": "PA-023",
+    "true_label": "DENY",
+    "insurance_type": "Anthem PPO",
+    "clinical_category": "imaging",
+    "documentation_quality": "weak",
+    "note": "42-year-old female requesting screening bilateral diagnostic mammogram (CPT 77067). No symptoms, no palpable mass, no family history of breast cancer, no prior abnormal mammogram. Last screening mammogram 8 months ago \u2014 reported as BI-RADS 1 (negative). Requesting repeat screening before annual interval. No documented clinical indication for early repeat screening.",
+    "predicted_extraction": {
+      "diagnoses": [],
+      "procedures": [
+        "77067"
+      ],
+      "drugs_failed": [],
+      "lab_values": {},
+      "clinical_entities": [
+        "family history of",
+        "breast cancer",
+        "annual",
+        "female",
+        "mass",
+        "indication",
+        "abnormal",
+        "BI-RADS",
+        "negative",
+        "screening mammogram"
+      ],
+      "has_prior_therapy_failure": false,
+      "has_specialist_support": false,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nfor moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have failed one TNF inhibitor may receive authorization for a biologic with a different mechanism without repeat csDMARD trial.\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have\n\n[Source: Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation]\nCIGNA COVERAGE POLICY \u2014 TRANSCRANIAL MAGNETIC STIMULATION (TMS) Covered Indication: Major Depressive Disorder, moderate to severe (PHQ-9 >= 10). All of the following criteria must be met: Diagnosis of MDD confirmed by a psychiatrist or licensed mental health professional. Inadequate response to at least TWO adequate antidepressant trials, each at therapeutic dose for minimum 6-8 weeks, of different antidepressant classes. PHQ-9 score >= 10 at time of request. No absolute contraindications: ferromagnetic implants, cochlear implants, seizure disorder. Psychiatry evaluation and recommendation. NOT covered: First-line treatment without antidepressant trials. Bipolar disorder alone. Required Documentation: Current PHQ-9 score. Two prior antidepressant trials documented with drug, dose, duration, and response. Psychiatry note supporting TMS.",
+    "retrieved_sources": [
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation"
+    ]
+  },
+  {
+    "case_id": "PA-024",
+    "true_label": "APPROVE",
+    "insurance_type": "BCBS Federal Employee Plan",
+    "clinical_category": "biologic_rheumatology",
+    "documentation_quality": "strong",
+    "note": "61-year-old female with seropositive RA (M05.79), RF 210 IU/mL, anti-CCP 380 U/mL. DAS28 5.9. Failed methotrexate 25mg weekly x 8 months (inadequate response). Failed leflunomide 20mg daily x 6 months (inadequate response, DAS28 5.7). Failed adalimumab 40mg q2w x 12 months \u2014 primary non-response (DAS28 never below 5.1). Rheumatology recommends T-cell costimulation inhibitor given TNF primary non-responder status. Negative TB, hepatitis B/C. No active infections.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "M05.79"
+      ],
+      "procedures": [],
+      "drugs_failed": [
+        "methotrexate 25mg",
+        "leflunomide 20mg",
+        "adalimumab 40mg"
+      ],
+      "lab_values": {
+        "DAS28": "5.9."
+      },
+      "clinical_entities": [
+        "Failed",
+        "DAS28",
+        "adalimumab",
+        "TNF",
+        "hepatitis",
+        "weekly",
+        "inadequate response",
+        "No active infections",
+        "Negative TB",
+        "T-cell costimulation inhibitor"
+      ],
+      "has_prior_therapy_failure": true,
+      "has_specialist_support": true,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nCOVERAGE CRITERIA \u2014 BIOLOGIC DISEASE-MODIFYING ANTIRHEUMATIC DRUGS Indications: Rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis confirmed by a rheumatologist. Step Therapy Requirements: Prior to biologic initiation, the patient must have completed an adequate trial of at least two conventional synthetic DMARDs, which must include methotrexate unless contraindicated. An adequate trial is defined as therapeutic dose for a minimum of 3 months, unless discontinued earlier due to toxicity. Acceptable reasons for csDMARD failure: (1) Inadequate clinical response as measured by validated disease activity scores (DAS28, CDAI, or SDAI); (2) Intolerance or adverse effects requiring discontinuation; (3) Contraindication to the agent. Required Documentation: Confirmed diagnosis with serology (RF, anti-CCP) or imaging. Validated disease activity score at time of request (DAS28 > 3.2 for moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have\n\n[Source: CMS LCD L37209 \u2014 Biologic DMARDs]\nfor moderate/severe). Documentation of prior csDMARD trials including agent, dose, duration, and reason for discontinuation. Negative TB screening within 6 months. Rheumatology recommendation. For TNF Inhibitor Failure: Patients who have failed one TNF inhibitor may receive authorization for a biologic with a different mechanism without repeat csDMARD trial.\n\n[Source: CMS LCD L38072 \u2014 Checkpoint Inhibitor Immunotherapy]\nCOVERAGE CRITERIA \u2014 CHECKPOINT INHIBITOR IMMUNOTHERAPY General Requirements: Confirmed malignancy with pathology report. FDA-approved indication for requested agent and tumor type. ECOG performance status 0-2. Oncology specialist evaluation and tumor board review when applicable. Pembrolizumab NSCLC First Line: Stage IV NSCLC confirmed. PD-L1 TPS >= 50% by validated assay for monotherapy. No actionable EGFR mutation or ALK rearrangement. No prior systemic therapy for metastatic disease. Adequate organ function. Biomarker Testing: PD-L1, TMB, MSI, EGFR, ALK, ROS1 results must be documented. Step Therapy Note: Standard step therapy requirements are waived for oncology agents used per NCCN Category 1 or 2A evidence.",
+    "retrieved_sources": [
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "CMS LCD L37209 \u2014 Biologic DMARDs",
+      "CMS LCD L38072 \u2014 Checkpoint Inhibitor Immunotherapy"
+    ]
+  },
+  {
+    "case_id": "PA-025",
+    "true_label": "PENDING_REVIEW",
+    "insurance_type": "Cigna PPO",
+    "clinical_category": "mental_health",
+    "documentation_quality": "partial",
+    "note": "39-year-old male with obesity (E66.09, BMI 37.8) and alcohol use disorder in remission >12 months (F10.20). Requesting Contrave for weight management. Psychiatry confirms AUD remission, no active cravings, stable on naltrexone 50mg oral (now requesting to transition to combination product). Endocrinology supportive. No opioid use. No seizure history. Blood pressure 128/82. Liver enzymes WNL.",
+    "predicted_extraction": {
+      "diagnoses": [
+        "F10.20",
+        "E66.09"
+      ],
+      "procedures": [],
+      "drugs_failed": [],
+      "lab_values": {
+        "BMI": "37.8"
+      },
+      "clinical_entities": [
+        "F10.20",
+        "male",
+        "Blood pressure",
+        "opioid",
+        "Liver enzymes",
+        "history",
+        "AUD",
+        "Psychiatry",
+        "seizure",
+        "transition"
+      ],
+      "has_prior_therapy_failure": false,
+      "has_specialist_support": true,
+      "documentation_gaps": []
+    },
+    "policy_context": "[Source: Cigna Coverage Policy \u2014 GLP-1 Step Therapy]\nCIGNA STEP THERAPY \u2014 GLP-1 AND DUAL GIP/GLP-1 AGONISTS GLP-1 Receptor Agonists require documentation of ONE of the following: Inadequate glycemic response to metformin plus SGLT-2 inhibitor for minimum 3 months. Documented contraindication or intolerance to SGLT-2 inhibitors. Established ASCVD, HFrEF, or CKD stage 3+ (cardiorenal indication bypasses SGLT-2 step). Dual GIP/GLP-1 Agonists (tirzepatide): same criteria as above plus for obesity indication BMI >= 30 or >= 27 with comorbidity, and 3-month behavioral intervention. Exceptions Process: Step therapy exception may be requested with documentation of clinical urgency, contraindication, or failure at a prior plan within 12 months.\n\n[Source: Molina Healthcare \u2014 Bariatric Surgery Coverage Criteria]\nMOLINA HEALTHCARE COVERAGE CRITERIA \u2014 BARIATRIC SURGERY Covered Procedures: Laparoscopic Roux-en-Y Gastric Bypass (43644), Laparoscopic Sleeve Gastrectomy (43775). All of the following must be documented: BMI >= 40 kg/m2 OR BMI >= 35 with at least one obesity-related comorbidity (T2DM, hypertension, OSA, hyperlipidemia, GERD, osteoarthritis). Completion of medically supervised weight management program: minimum 6 consecutive months with monthly documented visits including dietary counseling. Psychological evaluation and clearance by a licensed mental health professional within 12 months of surgery date. Nutritional counseling: minimum 2 sessions with a registered dietitian. Surgical evaluation with no medical contraindications identified. Age 18 or older.\n\n[Source: Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation]\nCIGNA COVERAGE POLICY \u2014 TRANSCRANIAL MAGNETIC STIMULATION (TMS) Covered Indication: Major Depressive Disorder, moderate to severe (PHQ-9 >= 10). All of the following criteria must be met: Diagnosis of MDD confirmed by a psychiatrist or licensed mental health professional. Inadequate response to at least TWO adequate antidepressant trials, each at therapeutic dose for minimum 6-8 weeks, of different antidepressant classes. PHQ-9 score >= 10 at time of request. No absolute contraindications: ferromagnetic implants, cochlear implants, seizure disorder. Psychiatry evaluation and recommendation. NOT covered: First-line treatment without antidepressant trials. Bipolar disorder alone. Required Documentation: Current PHQ-9 score. Two prior antidepressant trials documented with drug, dose, duration, and response. Psychiatry note supporting TMS.",
+    "retrieved_sources": [
+      "Cigna Coverage Policy \u2014 GLP-1 Step Therapy",
+      "Molina Healthcare \u2014 Bariatric Surgery Coverage Criteria",
+      "Cigna Coverage Policy \u2014 Transcranial Magnetic Stimulation"
+    ]
+  }
+]
