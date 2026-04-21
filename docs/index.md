@@ -3,7 +3,7 @@
 
 Transforming unstructured clinical notes into structured, policy-aligned prior authorization decisions.
 
-**Run a live demo here:** []
+**Run a live demo here:** [Live Demo](https://github.com/Hannah-Hiltz/PriorAuthAutomation/docs/demo.md)
 
 **View Code on Github here:** [View Code on GitHub](https://github.com/Hannah-Hiltz/PriorAuthAutomation)
 
