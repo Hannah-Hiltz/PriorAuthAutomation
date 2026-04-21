@@ -1,0 +1,34 @@
+# Prior Authorization Automation — Dependencies
+# Install: pip install -r requirements.txt
+
+# ── NLP ───────────────────────────────────────────────────────────────────────
+spacy>=3.7.0
+scispacy>=0.5.4
+
+# scispaCy biomedical model (install separately after scispacy)
+# pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_sm-0.5.4.tar.gz
+# Fallback (no biomedical NER): python -m spacy download en_core_web_sm
+
+# ── RAG / Embeddings ──────────────────────────────────────────────────────────
+sentence-transformers>=2.6.0
+chromadb>=0.4.0
+
+# PDF ingestion (optional — only needed for real payer policy PDFs)
+PyPDF2>=3.0.0
+
+# ── LLM Providers (install at least one) ─────────────────────────────────────
+anthropic>=0.25.0
+openai>=1.30.0
+
+# ── Evaluation ────────────────────────────────────────────────────────────────
+bert-score>=0.3.13
+scikit-learn>=1.4.0
+
+# ── Data & Visualization ──────────────────────────────────────────────────────
+pandas>=2.0.0
+numpy>=1.26.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# ── Utilities ─────────────────────────────────────────────────────────────────
+tqdm>=4.66.0
