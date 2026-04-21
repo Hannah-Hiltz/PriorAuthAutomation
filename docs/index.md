@@ -43,7 +43,7 @@ This project builds an end-to-end pipeline that reads an unstructured physician 
 
 ## System Architecture
 
-![Pipeline](pipeline_diagram.png)
+![Pipeline Diagram](pipeline_diagram.png)
 
 *End-to-end pipeline: clinical note → NLP extraction → rule engine + RAG → LLM → structured outputs*
 
