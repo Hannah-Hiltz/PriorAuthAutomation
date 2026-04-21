@@ -81,7 +81,7 @@ PriorAuthAutomation/
 ├── docs/                               # GitHub Pages (business case & system design)
 │
 ├── pipeline_diagram.png                # Pipeline architecture diagram
-├── gitignore.txt
+├── .gitignore.txt
 ├── requirements.txt
 └── README.md
 ```
