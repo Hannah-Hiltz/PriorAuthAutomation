@@ -168,14 +168,6 @@ This project was built with healthcare compliance as a design constraint, not an
 
 ---
 
-## Technical Write-Up
-
-For the full technical implementation — code, validation metrics, and notebook walkthroughs — see the [GitHub repository](https://github.com/Hannah-Hiltz/PriorAuthAutomation).
-
-*This project uses entirely synthetic data. It is not intended for clinical use and does not constitute medical advice.*
-
----
-
 ## References
 
 - AMA Prior Authorization Physician Survey (2022)
@@ -185,3 +177,11 @@ For the full technical implementation — code, validation metrics, and notebook
 - Da Vinci Project: Prior Authorization Support FHIR IG
 - scispaCy: Neumann et al., ACL (2019)
 - KEYNOTE-024, OlympiAD, and referenced clinical trials per case
+
+---
+
+## Technical Write-Up
+
+For the full technical implementation — code, validation metrics, and notebook walkthroughs — see the [GitHub repository](https://github.com/Hannah-Hiltz/PriorAuthAutomation).
+
+*This project uses entirely synthetic data. It is not intended for clinical use and does not constitute medical advice.*
