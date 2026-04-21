@@ -1,9 +1,3 @@
----
-layout: default
-title: Demo — Prior Authorization Automation
-description: Live pipeline walkthrough, sample outputs, and business impact
----
-
 # Pipeline Demo
 ### Prior Authorization Automation · Hannah Hiltz
 
@@ -50,8 +44,8 @@ The pipeline reads the note and pulls out structured clinical signals:
 | ICD-10 codes | E11.9, N18.3, I25.10 |
 | Lab values | HbA1c: 9.1%, eGFR: 48, UACR: 85 mg/g |
 | Drugs failed | metformin 1000mg (GI intolerance), glipizide 10mg (hypoglycemia x3) |
-| Prior therapy failure | ✅ True |
-| Specialist support | ✅ True (endocrinology) |
+| Prior therapy failure | True |
+| Specialist support | True (endocrinology) |
 | Documentation gaps | None flagged |
 
 This structured object — not the raw note — feeds into the rule engine and LLM. It's what makes the output clinically specific rather than generic.
@@ -119,7 +113,6 @@ All denials require human clinical reviewer sign-off before issuance.
 
 The pipeline handles every outcome. Here's a real example of each from the synthetic dataset.
 
----
 
 ### APPROVE — Oncology (Pembrolizumab)
 
@@ -129,7 +122,6 @@ The pipeline handles every outcome. Here's a real example of each from the synth
 
 **Confidence:** 92%
 
----
 
 ### DENY — Asthma Biologic (Dupilumab)
 
@@ -146,7 +138,6 @@ The pipeline handles every outcome. Here's a real example of each from the synth
 
 **Confidence:** 88%
 
----
 
 ### PENDING REVIEW — Esketamine (Treatment-Resistant MDD)
 
