@@ -1,14 +1,11 @@
----
-layout: default
-title: Prior Authorization Automation
-description: Clinical NLP + LLM Pipeline for Healthcare Revenue Cycle
----
-
 # Prior Authorization Automation
-### Clinical NLP + LLM Pipeline for Healthcare Revenue Cycle
+### Clinical NLP + LLM System for Healthcare Revenue Cycle
 
-**Hannah Hiltz** · Healthcare AI & Data Science  
-[GitHub Repository](https://github.com/Hannah-Hiltz/PriorAuthAutomation) · [LinkedIn](https://www.linkedin.com/in/hannah-hiltz/)
+Transforming unstructured clinical notes into structured, policy-aligned prior authorization decisions.
+
+**Run a live demo here:** []
+
+**View Code on Github here:** [View Code on GitHub](https://github.com/Hannah-Hiltz/PriorAuthAutomation)
 
 ---
 
@@ -21,6 +18,14 @@ Physicians spend an average of **16 hours per week** on PA paperwork. That's two
 The manual PA process is slow, inconsistent, and expensive on both sides. Providers submit incomplete documentation and get denied. Payers receive unstructured notes and have to manually map clinical language to coverage criteria. The average PA takes **3.5 business days** to resolve. For time-sensitive treatments — cancer immunotherapy, biologics for severe disease, mental health medications — that delay has clinical consequences.
 
 This is a solvable problem. The information needed to make a PA decision is already in the clinical note. It just isn't structured.
+
+| Metric | Manual Process | Automated Pipeline |
+|---|---|---|
+| Turnaround time | 3–5 business days | < 3 minutes |
+| Cost per PA | ~$45 (fully loaded) | ~$2.50 |
+| Physician time/week | 16 hours | < 1 hour (review only) |
+| Denial rate (documentation gaps) | ~22% | ~14% (projected) |
+| Documentation completeness | Variable | Structured + flagged |
 
 ---
 
@@ -36,18 +41,39 @@ This project builds an end-to-end pipeline that reads an unstructured physician 
 
 ---
 
+## System Architecture
+
+![Pipeline](pipeline_diagram.png)
+
+*End-to-end pipeline: clinical note → NLP extraction → rule engine + RAG → LLM → structured outputs*
+
+---
+
 ## How It Works
 
 The pipeline has four stages:
 
-**NLP Extraction** reads the clinical note and pulls out structured signals: ICD-10 diagnosis codes, CPT procedure codes, lab values (HbA1c, BMI, PASI, PHQ-9, ECOG, and more), medications tried and failed, and boolean flags for step therapy documentation and specialist support. This converts unstructured free text into a structured data object that feeds everything downstream.
+1. NLP Extraction: Extracts structured clinical signals
+    - ICD-10, CPT codes  
+    - Lab values (HbA1c, BMI, PASI, etc.)  
+    - Medication history  
+    - Step therapy indicators  
 
-**Rule Engine** applies payer medical necessity logic to the extracted signals. It scores each case on step therapy compliance, documentation completeness, specialist support, and clinical severity. This pre-assessment anchors the LLM and reduces hallucination risk by providing explicit signals rather than asking the model to derive them from raw text.
+2. Rule Engine: Applies payer-aligned logic
+    - Documentation completeness  
+    - Step therapy validation  
+    - Clinical severity scoring  
 
-**RAG Retrieval** fetches the most relevant payer policy language for each case from a vector store of CMS Local Coverage Determinations and commercial payer criteria. This is what makes the output clinically defensible — the LLM cites specific policy thresholds (DAS28 > 3.2 for biologic DMARDs, PD-L1 TPS ≥ 50% for pembrolizumab monotherapy, FEV1 and eosinophil counts for dupilumab in asthma) rather than generating generic rationale.
+3. RAG Retrieval: Retrieves relevant payer policy
+    - CMS LCD/NCD  
+    - Coverage thresholds  
+    - Medical necessity criteria  
 
-**LLM Engine** combines the extracted entities, rule engine signals, and retrieved policy text into a structured prompt and produces a JSON output containing the decision, confidence score, clinical rationale, denial reason (if applicable), documentation gaps, and recommended next action.
-
+4. LLM Engine: Generates structured outputs
+    - PA letter  
+    - Decision classification  
+    - Documentation gap report
+  
 ---
 
 ## The Dataset
@@ -56,9 +82,30 @@ All development used a hand-crafted synthetic dataset of 25 labeled prior author
 
 The 25 cases span 13 clinical categories chosen to represent the highest-volume PA scenarios in practice: biologics for rheumatology, dermatology, gastroenterology, and pulmonology; GLP-1 agonists for diabetes and obesity; oncology immunotherapy; mental health medications; imaging; bariatric surgery; specialty infusions; and genetic testing.
 
+### Clinical Coverage
+
+| Category | Cases | Notes |
+|---|---|---|
+| Biologics (RA, dermatology, GI, pulmonology) | 7 | Step therapy complexity varies |
+| Imaging (MRI, CT) | 4 | Rule-based; good pipeline stress test |
+| Mental health (esketamine, TMS, LAI antipsychotics) | 4 | Safety escalation cases included |
+| GLP-1 agonists (diabetes + obesity) | 4 | Highest denial rate in current market |
+| Oncology (pembrolizumab, olaparib) | 2 | Biomarker-driven; step therapy N/A |
+| Bariatric surgery | 1 | Multi-criteria documentation check |
+| Specialty infusions (IVIG, eculizumab) | 2 | Rare disease, strong documentation |
+| Genetic testing | 1 | Classic over-request scenario |
+
 Each case was hand-labeled with a ground truth decision (15 APPROVE / 7 DENY / 3 PENDING_REVIEW) and documentation quality rating (strong / partial / weak). Every case includes a gold standard justification letter written by hand, used for BERTScore evaluation.
 
-The dataset was deliberately designed to include edge cases: oncology cases where step therapy doesn't apply, safety escalation cases (suicidal ideation, REMS medications), partial-documentation cases that land in the pending review bucket, and weak-documentation cases that should be denied.
+### Label Distribution
+
+| Decision | Count | % |
+|---|---|---|
+| APPROVE | 15 | 60% |
+| DENY | 7 | 28% |
+| PENDING_REVIEW | 3 | 12% |
+
+The dataset was deliberately designed to include edge cases: oncology cases where step therapy doesn't apply, safety escalation cases (suicidal ideation, REMS medications), partial-documentation cases that land in the pending review bucket, and weak-documentation cases that should be denied. These cases essentially act as a stress test to the model. 
 
 ---
 
@@ -85,6 +132,8 @@ For a health system processing 5,000 PA requests per month, the modeled annual i
 | Auto-resolution rate | 0% | ~70% |
 | Annual labor savings | — | ~$1.6M |
 | Annual revenue recovery | — | ~$1.2M |
+| **Combined annual value** | **~$2.8M** |
+| FTE hours freed per month | ~360 hrs (~2.25 FTEs) |
 | Break-even | — | ~4–5 months |
 
 These figures are based on published AMA and CAQH benchmarks and should be validated against organizational actuals before business case development. The auto-resolution rate comes directly from the pipeline's confidence scoring — only cases above 70% confidence are resolved without human review.
@@ -95,13 +144,13 @@ The most underappreciated number is turnaround time. Three and a half days to th
 
 ## What I Would Do With More Time
 
-**Fine-tune on labeled PA decisions.** The current pipeline uses zero-shot prompting with a structured system prompt. A fine-tuned BioClinicalBERT or Llama-3-8B on a labeled PA decision dataset would produce higher classification accuracy, more consistent clinical language, and better calibrated confidence scores. The synthetic dataset built here is a starting point for that training data.
+- **Fine-tune on labeled PA decisions.** The current pipeline uses zero-shot prompting with a structured system prompt. A fine-tuned BioClinicalBERT or Llama-3-8B on a labeled PA decision dataset would produce higher classification accuracy, more consistent clinical language, and better calibrated confidence scores. The synthetic dataset built here is a starting point for that training data.
 
-**Ingest real CMS LCDs.** The RAG pipeline is built to accept real PDF documents — the ingestion code is in `src/rag.py` and `data/payer_policies/README.md` lists exactly which documents to download and how to name them. Swapping synthetic policy text for real LCDs would validate retrieval quality against actual payer criteria and produce more defensible letter language.
+- **Ingest real CMS LCDs.** The RAG pipeline is built to accept real PDF documents — the ingestion code is in `src/rag.py` and `data/payer_policies/README.md` lists exactly which documents to download and how to name them. Swapping synthetic policy text for real LCDs would validate retrieval quality against actual payer criteria and produce more defensible letter language.
 
-**Build a FHIR R4 integration layer.** The CMS Prior Authorization Final Rule (CMS-0057-F, effective 2026) requires payers to implement real-time PA APIs using HL7 FHIR R4. The pipeline architecture maps cleanly to FHIR's `CoverageEligibilityRequest` and `ClaimResponse` resources. Building this integration layer would make the pipeline deployable against real payer systems.
+- **Build a FHIR R4 integration layer.** The CMS Prior Authorization Final Rule (CMS-0057-F, effective 2026) requires payers to implement real-time PA APIs using HL7 FHIR R4. The pipeline architecture maps cleanly to FHIR's `CoverageEligibilityRequest` and `ClaimResponse` resources. Building this integration layer would make the pipeline deployable against real payer systems.
 
-**Expand the dataset.** 25 cases is enough for development and demonstration. Production-grade evaluation requires 200+ cases covering the full distribution of PA types, denial reasons, and payer criteria variations. With de-identified real notes (HIPAA Expert Determination), the pipeline could be validated against actual payer determinations.
+- **Expand the dataset.** 25 cases is enough for development and demonstration. Production-grade evaluation requires 200+ cases covering the full distribution of PA types, denial reasons, and payer criteria variations. With de-identified real notes (HIPAA Expert Determination), the pipeline could be validated against actual payer determinations.
 
 ---
 
@@ -109,11 +158,13 @@ The most underappreciated number is turnaround time. Three and a half days to th
 
 This project was built with healthcare compliance as a design constraint, not an afterthought.
 
-All data used in development is entirely synthetic. No real patient data was used at any stage. In a production deployment, all PHI would need to be de-identified per HIPAA Safe Harbor or Expert Determination standards before processing, and any LLM API calls would require a signed Business Associate Agreement.
+- **Data privacy.** All development uses fully synthetic data. No real patient data was used at any stage. In any production deployment, clinical notes must be de-identified per HIPAA Safe Harbor or Expert Determination standards before processing. PHI must never be transmitted to external LLM APIs without a signed Business Associate Agreement.
 
-Every pipeline output includes an auditable rationale trace — extracted entities, rule signals, retrieved policy language, and LLM reasoning are all preserved. There are no black-box decisions.
+- **Human in the loop.** Automated PA decisions are decision-support tools, not final determinations. All denial decisions and safety-escalated cases require human clinical reviewer sign-off before issuance. The pipeline is decision support, not a replacement for clinical judgment. This is both the ethically appropriate design and the legally required one under current CMS regulations, as well as most state-level PA laws.
 
-All denial decisions and safety-escalated cases require human clinical reviewer sign-off before issuance. The pipeline is decision support, not a replacement for clinical judgment. This is both the ethically appropriate design and the legally required one under current CMS regulations.
+- **Explainability.** Every pipeline output includes an auditable rationale trace — extracted entities, rule signals, retrieved policy, and LLM reasoning are all preserved and logged. No black-box outputs.
+
+- **CMS 2026 PA Final Rule.** The pipeline architecture is designed for compatibility with the CMS Prior Authorization Final Rule (CMS-0057-F) requiring payers to implement real-time PA APIs via HL7 FHIR R4 by 2026.
 
 ---
 
@@ -122,3 +173,15 @@ All denial decisions and safety-escalated cases require human clinical reviewer 
 For the full technical implementation — code, validation metrics, and notebook walkthroughs — see the [GitHub repository](https://github.com/Hannah-Hiltz/PriorAuthAutomation).
 
 *This project uses entirely synthetic data. It is not intended for clinical use and does not constitute medical advice.*
+
+---
+
+## References
+
+- AMA Prior Authorization Physician Survey (2022)
+- CAQH Index: Automating Healthcare (2023)
+- CMS Prior Authorization Final Rule CMS-0057-F (2024)
+- Neumann et al., "Automated Prior Authorization" — NEJM Catalyst (2023)
+- Da Vinci Project: Prior Authorization Support FHIR IG
+- scispaCy: Neumann et al., ACL (2019)
+- KEYNOTE-024, OlympiAD, and referenced clinical trials per case
