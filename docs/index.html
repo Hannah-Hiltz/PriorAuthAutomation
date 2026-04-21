@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prior Authorization Automation — Interactive Pipeline Demo</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-2: #f7f9fc;
+    --panel: #ffffff;
+    --panel-2: #f5f8fd;
+    --line: #e3e8f0;
+    --ink: #0f172a;
+    --ink-dim: #475569;
+    --ink-faint: #94a3b8;
+    --brand: #2563eb;
+    --brand-2: #1d4ed8;
+    --accent: #0891b2;
+    --approve: #16a34a;
+    --approve-bg: rgba(22,163,74,0.10);
+    --deny: #dc2626;
+    --deny-bg: rgba(220,38,38,0.10);
+    --pending: #d97706;
+    --pending-bg: rgba(217,119,6,0.10);
+    --radius: 14px;
+    --shadow: 0 4px 20px rgba(15,23,42,0.06);
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: radial-gradient(1200px 600px at 10% -10%, rgba(37,99,235,0.06), transparent 60%),
+                radial-gradient(900px 500px at 110% 10%, rgba(8,145,178,0.05), transparent 60%),
+                var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--brand-2); text-decoration: none; }
+  a:hover { color: var(--accent); }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 28px; }
+
+  /* HEADER */
+  header.hero {
+    padding: 56px 0 28px;
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(79,140,255,0.10);
+    color: var(--brand-2);
+    border: 1px solid rgba(79,140,255,0.35);
+    padding: 6px 12px; border-radius: 999px;
+    font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    font-weight: 600;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 999px; box-shadow: 0 0 12px var(--accent); }
+  h1.title {
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.15;
+    margin: 16px 0 10px;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+  h1.title .grad {
+    background: linear-gradient(90deg, #2563eb, #0891b2 55%, #7c3aed);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtitle {
+    color: var(--ink-dim); max-width: 820px;
+    font-size: 17px;
+  }
+  .byline {
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+    margin-top: 18px; color: var(--ink-faint); font-size: 13px;
+  }
+  .byline a { color: var(--ink-dim); }
+  .byline .chip {
+    border: 1px solid var(--line); padding: 4px 10px; border-radius: 999px;
+    font-family: var(--mono); font-size: 12px; color: var(--ink-dim);
+  }
+
+  /* KPI STRIP */
+  .kpis {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px; margin: 28px 0 10px;
+  }
+  .kpi {
+    background: linear-gradient(180deg, var(--panel), var(--panel-2));
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px;
+    position: relative; overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .kpi::after {
+    content: ""; position: absolute; inset: -1px;
+    background: linear-gradient(90deg, transparent, rgba(37,99,235,0.3), transparent);
+    height: 1px; top: 0; bottom: auto;
+  }
+  .kpi .label { color: var(--ink-faint); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .kpi .value {
+    font-size: 28px; font-weight: 700; margin-top: 6px; letter-spacing: -0.01em;
+  }
+  .kpi .sub { color: var(--ink-dim); font-size: 12px; margin-top: 4px; }
+  @media (max-width: 900px) {
+    .kpis { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  }
+
+  /* SECTIONS */
+  section { padding: 52px 0; border-bottom: 1px solid var(--line); }
+  section h2 {
+    font-size: 22px; margin: 0 0 4px; letter-spacing: -0.01em; font-weight: 700;
+  }
+  section .lede { color: var(--ink-dim); margin: 0 0 24px; max-width: 820px; }
+
+  /* PIPELINE */
+  .pipeline {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .stage {
+    position: relative;
+    background: linear-gradient(180deg, var(--panel), var(--panel-2));
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 18px; min-height: 160px;
+    box-shadow: var(--shadow);
+  }
+  .stage .step {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-faint);
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .stage h3 { margin: 8px 0 6px; font-size: 16px; }
+  .stage p { color: var(--ink-dim); font-size: 13px; margin: 0; }
+  .stage .tag {
+    display: inline-block; margin-top: 10px; margin-right: 6px;
+    font-family: var(--mono); font-size: 11px;
+    background: rgba(79,140,255,0.1); color: var(--brand-2);
+    border: 1px solid rgba(79,140,255,0.25);
+    padding: 3px 8px; border-radius: 6px;
+  }
+  .stage .num {
+    position: absolute; top: 12px; right: 14px;
+    color: var(--ink-faint); font-family: var(--mono); font-size: 12px;
+  }
+  @media (max-width: 900px) {
+    .pipeline { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .pipeline { grid-template-columns: 1fr; }
+  }
+
+  /* GRID LAYOUTS */
+  .two-col {
+    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 18px;
+  }
+  @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+  .card {
+    background: linear-gradient(180deg, var(--panel), var(--panel-2));
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+  .card h3 { margin: 0 0 6px; font-size: 15px; }
+  .card .muted { color: var(--ink-dim); font-size: 13px; margin-top: 4px; }
+
+  /* FEATURED DEMO TABS */
+  .demo-tabs {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;
+  }
+  .demo-tab {
+    border: 1px solid var(--line); background: var(--panel);
+    color: var(--ink-dim); padding: 10px 14px; border-radius: 10px;
+    cursor: pointer; font-size: 13px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 10px;
+    transition: all .15s ease;
+  }
+  .demo-tab:hover { color: var(--ink); border-color: var(--ink-faint); }
+  .demo-tab .pill {
+    font-family: var(--mono); font-size: 11px;
+    padding: 2px 6px; border-radius: 999px;
+  }
+  .demo-tab.active {
+    background: var(--panel-2); color: var(--ink);
+    border-color: var(--brand);
+    box-shadow: 0 0 0 1px var(--brand) inset;
+  }
+  .demo-panel { display: none; }
+  .demo-panel.active { display: block; }
+
+  /* DECISION BADGES */
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-weight: 600; font-size: 12px; padding: 4px 10px;
+    border-radius: 999px; font-family: var(--mono); letter-spacing: 0.04em;
+  }
+  .badge.approve { background: var(--approve-bg); color: var(--approve); }
+  .badge.deny { background: var(--deny-bg); color: var(--deny); }
+  .badge.pending { background: var(--pending-bg); color: var(--pending); }
+  .badge .d { width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+
+  /* CASE GRID */
+  .filter-bar {
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    margin-bottom: 16px;
+  }
+  .filter-btn {
+    background: var(--panel); border: 1px solid var(--line);
+    color: var(--ink-dim); padding: 8px 12px; border-radius: 999px;
+    cursor: pointer; font-size: 13px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all .15s ease;
+  }
+  .filter-btn:hover { color: var(--ink); }
+  .filter-btn.active {
+    background: var(--panel-2); color: var(--ink);
+    border-color: var(--brand);
+  }
+  .filter-btn .count {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-faint);
+    background: rgba(15,23,42,0.04); padding: 2px 6px; border-radius: 999px;
+  }
+  .search {
+    margin-left: auto; position: relative;
+  }
+  .search input {
+    background: var(--panel); border: 1px solid var(--line);
+    color: var(--ink); padding: 9px 12px 9px 34px; border-radius: 10px;
+    font-size: 13px; width: 240px;
+    outline: none;
+  }
+  .search input:focus { border-color: var(--brand); }
+  .search svg { position: absolute; left: 10px; top: 10px; opacity: 0.6; }
+
+  .case-grid {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  @media (max-width: 900px) { .case-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .case-grid { grid-template-columns: 1fr; } }
+
+  .case {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px;
+    cursor: pointer;
+    transition: transform .15s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+  }
+  .case:hover {
+    transform: translateY(-2px);
+    border-color: var(--brand);
+    background: var(--panel-2);
+    box-shadow: 0 8px 20px rgba(15,23,42,0.08);
+  }
+  .case .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .case .cid { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); }
+  .case .title { font-weight: 600; margin: 8px 0 4px; font-size: 14px; color: var(--ink); }
+  .case .meta { font-size: 12px; color: var(--ink-dim); }
+  .case .pay { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); margin-top: 8px; }
+  .case .doc {
+    position: absolute; top: 10px; right: 10px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.05em;
+    padding: 2px 6px; border-radius: 6px;
+    border: 1px solid var(--line); color: var(--ink-faint);
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(15,23,42,0.45);
+    backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 50; padding: 24px;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    max-width: 980px; width: 100%; max-height: 90vh; overflow-y: auto;
+    background: linear-gradient(180deg, var(--panel), var(--panel-2));
+    border: 1px solid var(--line); border-radius: 16px;
+    box-shadow: var(--shadow);
+  }
+  .modal header.m-head {
+    position: sticky; top: 0;
+    background: linear-gradient(180deg, var(--panel-2), var(--panel));
+    border-bottom: 1px solid var(--line);
+    padding: 18px 24px; display: flex; align-items: center; gap: 14px;
+    border-radius: 16px 16px 0 0;
+    z-index: 1;
+  }
+  .modal header.m-head .close {
+    margin-left: auto; background: transparent; border: 1px solid var(--line);
+    color: var(--ink-dim); width: 32px; height: 32px; border-radius: 8px; cursor: pointer;
+    font-size: 16px; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .modal header.m-head .close:hover { color: var(--ink); border-color: var(--ink-faint); }
+  .modal .body { padding: 22px 24px 28px; }
+
+  .pipeline-trace {
+    display: grid; grid-template-columns: 28px 1fr; row-gap: 6px; column-gap: 12px;
+    margin: 14px 0 4px;
+  }
+  .trace-row { display: contents; }
+  .trace-step {
+    width: 28px; height: 28px; border-radius: 999px;
+    background: var(--panel); border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 12px; color: var(--ink-dim);
+  }
+  .trace-step.ok { background: var(--approve-bg); color: var(--approve); border-color: rgba(34,197,94,0.3); }
+  .trace-step.warn { background: var(--pending-bg); color: var(--pending); border-color: rgba(245,158,11,0.3); }
+  .trace-step.fail { background: var(--deny-bg); color: var(--deny); border-color: rgba(244,63,94,0.3); }
+  .trace-body {
+    border-left: 1px dashed var(--line); padding: 2px 0 14px 16px; margin-left: -16px;
+  }
+  .trace-body:last-child { border-left: none; }
+  .trace-title { font-weight: 600; font-size: 13px; color: var(--ink); }
+  .trace-desc { font-size: 13px; color: var(--ink-dim); margin-top: 2px; }
+
+  .fields {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px; margin-top: 14px;
+  }
+  .field {
+    background: rgba(15,23,42,0.025); border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .field .k { font-size: 11px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.06em; }
+  .field .v { font-size: 13px; color: var(--ink); margin-top: 2px; font-family: var(--mono); }
+
+  .note-block {
+    background: rgba(15,23,42,0.025); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px; font-size: 13px; color: var(--ink-dim); line-height: 1.6;
+  }
+
+  .letter {
+    background: #fdfdfb; color: #111; border-radius: 10px;
+    padding: 22px 24px; font-family: Georgia, "Times New Roman", serif;
+    font-size: 13.5px; line-height: 1.65;
+    border: 1px solid #e6e6e6;
+  }
+  .letter .letterhead { border-bottom: 1px solid #e6e6e6; padding-bottom: 10px; margin-bottom: 14px; font-size: 12px; color: #555; display: flex; justify-content: space-between; }
+
+  .gap-list { margin: 8px 0 0; padding-left: 18px; }
+  .gap-list li { color: var(--ink-dim); font-size: 13px; margin-bottom: 4px; }
+
+  h4.sec {
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-faint); margin: 22px 0 8px; font-weight: 600;
+  }
+
+  /* ROI CALCULATOR */
+  .roi {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+  }
+  @media (max-width: 900px) { .roi { grid-template-columns: 1fr; } }
+  .sliders { display: grid; gap: 14px; }
+  .slider-row { display: grid; gap: 6px; }
+  .slider-row .l { display: flex; justify-content: space-between; font-size: 13px; }
+  .slider-row .l span:last-child { font-family: var(--mono); color: var(--brand-2); font-weight: 600; }
+  input[type="range"] {
+    -webkit-appearance: none; appearance: none; width: 100%; height: 6px;
+    background: var(--line); border-radius: 999px; outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 18px; height: 18px; border-radius: 999px;
+    background: var(--brand); border: 2px solid #fff; cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 18px; height: 18px; border-radius: 999px;
+    background: var(--brand); border: 2px solid #fff; cursor: pointer;
+  }
+  .roi-out {
+    display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px;
+  }
+  .roi-stat {
+    background: rgba(34,211,238,0.06); border: 1px solid rgba(34,211,238,0.2);
+    border-radius: 12px; padding: 14px;
+  }
+  .roi-stat .lab { font-size: 11px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.08em; }
+  .roi-stat .val { font-size: 22px; font-weight: 700; margin-top: 4px; letter-spacing: -0.01em; }
+  .roi-stat .sub { font-size: 12px; color: var(--ink-dim); margin-top: 2px; }
+  .roi-stat.hl { background: linear-gradient(180deg, rgba(79,140,255,0.15), rgba(122,169,255,0.05)); border-color: rgba(79,140,255,0.35); }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 0 60px; color: var(--ink-faint); font-size: 13px;
+  }
+  .foot-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; }
+
+  /* UTIL */
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 700px) { .row2 { grid-template-columns: 1fr; } }
+  .chart-wrap { position: relative; height: 280px; }
+  .hidden { display: none !important; }
+
+  /* category palette */
+  .catchip {
+    display: inline-block; font-family: var(--mono); font-size: 10px;
+    padding: 2px 8px; border-radius: 999px;
+    background: rgba(15,23,42,0.04); color: var(--ink-dim);
+    border: 1px solid var(--line);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- HERO -->
+<header class="hero">
+  <span class="eyebrow"><span class="dot"></span> Healthtech NLP · Live Pipeline Demo</span>
+  <h1 class="title">Prior Authorization <span class="grad">Automation Pipeline</span></h1>
+  <p class="subtitle">
+    An end-to-end NLP + LLM system that ingests unstructured clinical notes, validates them against payer step-therapy policy, and produces a decision (<span style="color:var(--approve)">APPROVE</span> / <span style="color:var(--deny)">DENY</span> / <span style="color:var(--pending)">PENDING</span>) alongside a formatted justification letter — with the business case baked in.
+  </p>
+  <div class="byline">
+    <span class="chip">Hannah Hiltz</span>
+    <a href="https://github.com/Hannah-Hiltz/PriorAuthAutomation" target="_blank" rel="noopener">github.com/Hannah-Hiltz/PriorAuthAutomation ↗</a>
+    <span class="chip">25 synthetic cases</span>
+    <span class="chip">scispaCy · ChromaDB · LLM · RAG</span>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="label">Turnaround time</div><div class="value">3.5 days → 3 min</div><div class="sub">~1,680× faster per request</div></div>
+    <div class="kpi"><div class="label">Auto-resolution</div><div class="value">~70%</div><div class="sub">with human review on safety cases</div></div>
+    <div class="kpi"><div class="label">Letter quality (BERTScore F1)</div><div class="value">0.687 / 0.757</div><div class="sub">full letter / rationale only</div></div>
+    <div class="kpi"><div class="label">Annual value @ 5K PAs/mo</div><div class="value">$2M+</div><div class="sub">vs. $528M industry rework</div></div>
+  </div>
+</header>
+
+<!-- PIPELINE -->
+<section id="pipeline">
+  <h2>How the pipeline works</h2>
+  <p class="lede">Four stages convert a free-text clinical note into a structured, auditable decision. Each stage is swappable and individually evaluable.</p>
+  <div class="pipeline">
+    <div class="stage">
+      <span class="num">01</span>
+      <div class="step">Stage 1</div>
+      <h3>NLP Extraction</h3>
+      <p>scispaCy entity recognition plus regex to pull diagnoses, procedures, drugs tried, lab values, and specialist support.</p>
+      <div>
+        <span class="tag">scispaCy</span><span class="tag">ICD-10</span><span class="tag">CPT</span>
+      </div>
+    </div>
+    <div class="stage">
+      <span class="num">02</span>
+      <div class="step">Stage 2</div>
+      <h3>Rule Engine</h3>
+      <p>Deterministic step-therapy validation and documentation completeness scoring. Surfaces gaps before the LLM ever sees the case.</p>
+      <div>
+        <span class="tag">step-therapy</span><span class="tag">doc scoring</span>
+      </div>
+    </div>
+    <div class="stage">
+      <span class="num">03</span>
+      <div class="step">Stage 3</div>
+      <h3>RAG Retrieval</h3>
+      <p>Embedding-based lookup over payer policies in ChromaDB — the LLM reasons against the right clause, not the whole manual.</p>
+      <div>
+        <span class="tag">ChromaDB</span><span class="tag">embeddings</span>
+      </div>
+    </div>
+    <div class="stage">
+      <span class="num">04</span>
+      <div class="step">Stage 4</div>
+      <h3>LLM Reasoning + Letter</h3>
+      <p>Classifies APPROVE / DENY / PENDING, cites criteria, and produces a formatted justification letter ready for payer review.</p>
+      <div>
+        <span class="tag">classification</span><span class="tag">letter gen</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHARTS -->
+<section id="outcomes">
+  <h2>Decision outcomes across the 25-case benchmark</h2>
+  <p class="lede">A deliberately varied mix — biologics, imaging, oncology, GLP-1, mental health — so the system is stress-tested on edge-of-policy cases, not just textbook approvals.</p>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Decision distribution</h3>
+      <p class="muted">15 APPROVE · 7 DENY · 3 PENDING_REVIEW</p>
+      <div class="chart-wrap"><canvas id="decisionChart"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Clinical category mix</h3>
+      <p class="muted">Breadth across therapeutic areas demonstrates the pipeline generalizes.</p>
+      <div class="chart-wrap"><canvas id="categoryChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="two-col" style="margin-top:14px;">
+    <div class="card">
+      <h3>Documentation quality vs. decision</h3>
+      <p class="muted">Strong documentation → approve. Weak documentation → deny. Partial → human review. The rule engine surfaces this relationship before the LLM is asked to reason.</p>
+      <div class="chart-wrap"><canvas id="docChart"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Payer coverage</h3>
+      <p class="muted">Aetna, BCBS, Cigna, UHC, Humana, Molina, Oscar, Anthem — policies retrieved via RAG.</p>
+      <div class="chart-wrap"><canvas id="payerChart"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED DEMOS -->
+<section id="demo">
+  <h2>Live demo — one case per decision type</h2>
+  <p class="lede">Click a tab to see a representative case walk through the pipeline, end to end. Each trace shows what the extractor pulled, what the rule engine flagged, and the final letter.</p>
+
+  <div class="demo-tabs" id="demoTabs">
+    <button class="demo-tab active" data-demo="PA-002">
+      <span class="pill" style="background:var(--approve-bg);color:var(--approve);">APPROVE</span>
+      GLP-1 for high-risk T2DM (PA-002)
+    </button>
+    <button class="demo-tab" data-demo="PA-003">
+      <span class="pill" style="background:var(--deny-bg);color:var(--deny);">DENY</span>
+      MRI lumbar — no conservative Rx trial (PA-003)
+    </button>
+    <button class="demo-tab" data-demo="PA-006">
+      <span class="pill" style="background:var(--pending-bg);color:var(--pending);">PENDING</span>
+      Esketamine w/ safety flag (PA-006)
+    </button>
+  </div>
+
+  <div id="demoContainer"></div>
+</section>
+
+<!-- CASE EXPLORER -->
+<section id="explorer">
+  <h2>Full case explorer</h2>
+  <p class="lede">Filter by decision type or search by drug, ICD code, or payer. Click any card to view the complete pipeline trace.</p>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="ALL">All <span class="count" id="cntAll">25</span></button>
+    <button class="filter-btn" data-filter="APPROVE"><span class="badge approve"><span class="d"></span>APPROVE</span> <span class="count" id="cntApp">15</span></button>
+    <button class="filter-btn" data-filter="DENY"><span class="badge deny"><span class="d"></span>DENY</span> <span class="count" id="cntDen">7</span></button>
+    <button class="filter-btn" data-filter="PENDING_REVIEW"><span class="badge pending"><span class="d"></span>PENDING</span> <span class="count" id="cntPen">3</span></button>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="searchInput" placeholder="Search drug, ICD, payer…" />
+    </div>
+  </div>
+
+  <div class="case-grid" id="caseGrid"></div>
+</section>
+
+<!-- BUSINESS IMPACT -->
+<section id="roi">
+  <h2>Business impact — interactive ROI</h2>
+  <p class="lede">Adjust the inputs to model annual savings for any payer or health system. Defaults reflect the portfolio's baseline scenario (5,000 PAs/month, 70% auto-resolution).</p>
+
+  <div class="card">
+    <div class="roi">
+      <div class="sliders">
+        <div class="slider-row">
+          <div class="l"><span>PA volume / month</span><span id="volOut">5,000</span></div>
+          <input id="volIn" type="range" min="500" max="50000" step="500" value="5000" />
+        </div>
+        <div class="slider-row">
+          <div class="l"><span>Auto-resolution rate</span><span id="autoOut">70%</span></div>
+          <input id="autoIn" type="range" min="30" max="95" step="1" value="70" />
+        </div>
+        <div class="slider-row">
+          <div class="l"><span>Manual cost per PA</span><span id="costOut">$12</span></div>
+          <input id="costIn" type="range" min="5" max="40" step="1" value="12" />
+        </div>
+        <div class="slider-row">
+          <div class="l"><span>Automated cost per PA</span><span id="autocostOut">$0.25</span></div>
+          <input id="autocostIn" type="range" min="0" max="200" step="1" value="25" />
+        </div>
+        <div class="slider-row">
+          <div class="l"><span>Avg. denial overturn cost avoided</span><span id="overOut">$450</span></div>
+          <input id="overIn" type="range" min="100" max="1200" step="25" value="450" />
+        </div>
+        <div class="slider-row">
+          <div class="l"><span>Denial overturn rate prevented</span><span id="overRateOut">5%</span></div>
+          <input id="overRateIn" type="range" min="0" max="20" step="1" value="5" />
+        </div>
+      </div>
+      <div class="roi-out">
+        <div class="roi-stat hl">
+          <div class="lab">Annual net savings</div>
+          <div class="val" id="saveOut">$2.03M</div>
+          <div class="sub">cost avoidance + overturn prevention</div>
+        </div>
+        <div class="roi-stat">
+          <div class="lab">Annual cost → automation</div>
+          <div class="val" id="autoCostYr">$105K</div>
+          <div class="sub">compute + maintenance</div>
+        </div>
+        <div class="roi-stat">
+          <div class="lab">Cases auto-resolved / yr</div>
+          <div class="val" id="autoVol">42,000</div>
+          <div class="sub">freed reviewer hours</div>
+        </div>
+        <div class="roi-stat">
+          <div class="lab">Reviewer hours redeployed</div>
+          <div class="val" id="hoursOut">10,500</div>
+          <div class="sub">at ~15 min per manual PA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:18px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
+    <div class="card"><h3>Why this matters</h3><p class="muted">Physicians spend ~16 hours/week on PA paperwork and 94% report delays lead to care abandonment. This is a workflow problem with direct clinical consequences.</p></div>
+    <div class="card"><h3>Where the savings come from</h3><p class="muted">Three compounding levers: cheaper unit cost per PA, fewer appeals/overturns (better letters cite criteria correctly), and faster cycle time (fewer abandoned authorizations).</p></div>
+    <div class="card"><h3>Operational safety</h3><p class="muted">Not every case is auto-decided. Safety-flagged PENDING routing (e.g. suicidality, AUD+bupropion) preserves clinician oversight — a required feature for payer adoption.</p></div>
+  </div>
+</section>
+
+<!-- TECH STACK / EVAL -->
+<section id="eval">
+  <h2>Evaluation & what I'd build next</h2>
+  <p class="lede">Grounded, measurable, and honest about the ceilings.</p>
+
+  <div class="row2">
+    <div class="card">
+      <h3>How I measured quality</h3>
+      <p class="muted">BERTScore F1 against gold-standard justification letters: <b>0.687 full letter</b>, <b>0.757 rationale-only</b>. Classification accuracy evaluated against 25 labeled cases. Documentation-gap detection evaluated as a retrieval task.</p>
+    </div>
+    <div class="card">
+      <h3>Next iteration</h3>
+      <p class="muted">Expand to 500 cases with payer-specific policy corpora, add peer-to-peer dialog simulation, benchmark against production vendor tools on turnaround and overturn rate, and ship a feedback loop so reviewer overrides retrain the rule weights.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-row">
+    <div>Built by Hannah Hiltz · <a href="https://github.com/Hannah-Hiltz/PriorAuthAutomation" target="_blank">Repo on GitHub</a></div>
+    <div>Synthetic data · no PHI · not a clinical decision tool</div>
+  </div>
+</footer>
+
+</div><!-- /container -->
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <header class="m-head">
+      <span id="modalCid" class="chip" style="font-family:var(--mono);font-size:12px;color:var(--ink-dim);border:1px solid var(--line);padding:4px 10px;border-radius:999px;">PA-000</span>
+      <span id="modalBadge"></span>
+      <span id="modalCat" class="catchip"></span>
+      <button class="close" onclick="closeModal()">✕</button>
+    </header>
+    <div class="body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/* ============== EMBEDDED DATASET (25 cases) ============== */
+const CASES = [
+  {"case_id":"PA-001","insurance_type":"Aetna HMO","clinical_category":"biologic_dermatology","drug_requested":"dupilumab 300mg SC q2w","icd10_codes":["L20.9"],"cpt_codes":[],"note":"Patient is a 31-year-old female with moderate-to-severe atopic dermatitis (ICD-10: L20.9) affecting 35% BSA with EASI score of 28.4. Completed 8-week trial of triamcinolone 0.1% cream (inadequate response, BSA unchanged at 33%). Completed 12-week trial of tacrolimus 0.1% ointment (discontinued due to burning intolerance, documented visit 03/2024). Dermatology consulted and recommends dupilumab given failed topical therapies and significant impact on quality of life (DLQI 18). No active ocular herpes or conjunctivitis. No live vaccines pending.","documentation_quality":"strong","true_label":"APPROVE","extraction":{"diagnoses":["L20.9"],"drugs_failed":["triamcinolone 0.1% cream","tacrolimus 0.1% ointment"],"lab_values":{"EASI":"28.4","BSA":"35%","DLQI":"18"},"has_prior_therapy_failure":true,"has_specialist_support":true,"documentation_gaps":[]},"gold_standard_letter":"Patient is a 31-year-old female with a confirmed diagnosis of moderate-to-severe atopic dermatitis (ICD-10: L20.9) with objective disease burden documented at 35% BSA involvement and an EASI score of 28.4, consistent with severe disease classification. The patient has completed adequate trials of two topical therapies as required by Aetna step therapy criteria: triamcinolone 0.1% cream for 8 weeks with documented inadequate response, and tacrolimus 0.1% ointment for 12 weeks, discontinued due to intolerance. Dermatology supports initiation of dupilumab 300mg SC every two weeks based on guideline-concordant progression through step therapy. Authorization is medically necessary to achieve disease control and prevent long-term sequelae including infection and scarring."},
+  {"case_id":"PA-002","insurance_type":"BlueCross PPO","clinical_category":"glp1_diabetes","drug_requested":"semaglutide 0.5mg SC weekly (Ozempic)","icd10_codes":["E11.9","N18.3","I25.10"],"cpt_codes":["99214"],"note":"58-year-old male with Type 2 Diabetes Mellitus (E11.9), stage 3a CKD (N18.3), and established CAD (I25.10) post-NSTEMI 2021. HbA1c 9.1% on current regimen. Failed metformin 1000mg BID x 6 months (GI intolerance — nausea and diarrhea, documented). Failed glipizide 10mg daily x 4 months — three hypoglycemic episodes requiring glucose administration, discontinued 01/2024. Endocrinology recommends GLP-1 agonist given cardiovascular risk profile and renal considerations. UACR 85 mg/g. eGFR 48.","documentation_quality":"strong","true_label":"APPROVE","extraction":{"diagnoses":["E11.9","N18.3","I25.10"],"drugs_failed":["metformin 1000mg BID","glipizide 10mg daily"],"lab_values":{"HbA1c":"9.1%","eGFR":"48","UACR":"85 mg/g"},"has_prior_therapy_failure":true,"has_specialist_support":true,"documentation_gaps":[]},"gold_standard_letter":"This 58-year-old male carries diagnoses of Type 2 Diabetes Mellitus (E11.9), stage 3a chronic kidney disease (N18.3), and established coronary artery disease with prior NSTEMI (I25.10), representing a high-cardiovascular-risk phenotype for which GLP-1 receptor agonist therapy has demonstrated superior outcomes in landmark trials. The patient has failed two prior oral agents meeting BlueCross step therapy requirements: metformin 1000mg BID for six months (discontinued for GI intolerance) and glipizide 10mg daily for four months (discontinued following three documented hypoglycemic episodes). Current HbA1c of 9.1% with eGFR 48 and UACR 85 mg/g supports the clinical urgency of optimizing glycemic and cardiorenal risk management. Endocrinology has evaluated the patient and endorses semaglutide initiation. Authorization is medically necessary and guideline-supported per ADA Standards of Care 2024."},
+  {"case_id":"PA-003","insurance_type":"Cigna EPO","clinical_category":"imaging","drug_requested":null,"icd10_codes":["M54.5"],"cpt_codes":["72148"],"note":"41-year-old male requesting MRI lumbar spine (CPT 72148) for low back pain (M54.5) of 3-week duration. Pain rated 4/10 at rest. No radicular symptoms, no bowel or bladder dysfunction, no fever, no unexplained weight loss. No prior physical therapy trial documented. No prior imaging. No NSAIDs trialed per medication history.","documentation_quality":"weak","true_label":"DENY","extraction":{"diagnoses":["M54.5"],"drugs_failed":[],"lab_values":{},"has_prior_therapy_failure":false,"has_specialist_support":false,"documentation_gaps":["No conservative therapy trial documented","No red flag symptoms present","No prior PT or NSAID trial","Duration under 6 weeks"]},"gold_standard_letter":"Following review of the submitted clinical documentation for lumbar spine MRI (CPT 72148), this request does not meet Cigna medical necessity criteria at this time. Current clinical guidelines and Cigna coverage policy require a minimum 4-6 week trial of conservative management — including physical therapy and pharmacologic therapy — prior to advanced imaging for non-specific low back pain in the absence of red flag symptoms. The submitted documentation does not demonstrate radicular symptoms, neurologic deficits, bowel or bladder dysfunction, fever, unexplained weight loss, or history of malignancy that would warrant expedited imaging. We recommend initiating a structured physical therapy program and trialing NSAIDs or acetaminophen. Should symptoms persist beyond 6 weeks or neurologic symptoms develop, resubmission with updated clinical documentation will be reviewed."},
+  {"case_id":"PA-004","insurance_type":"Medicare Advantage (Humana Gold Plus)","clinical_category":"biologic_rheumatology","drug_requested":"adalimumab 40mg SC q2w (Humira)","icd10_codes":["M05.79"],"cpt_codes":["99213"],"note":"67-year-old female with seropositive rheumatoid arthritis (M05.79), RF positive 148 IU/mL, anti-CCP positive >250 U/mL. DAS28 score 5.6 (high disease activity). Failed methotrexate 20mg weekly x 6 months — hepatotoxicity, LFTs 3.2x ULN, discontinued 11/2023. Failed hydroxychloroquine 400mg daily x 5 months — inadequate response, DAS28 unchanged at 5.4. Rheumatology recommends TNF inhibitor therapy. IGRA negative. CXR clear 01/2024. No active infections.","documentation_quality":"strong","true_label":"APPROVE","extraction":{"diagnoses":["M05.79"],"drugs_failed":["methotrexate 20mg weekly","hydroxychloroquine 400mg daily"],"lab_values":{"DAS28":"5.6","RF":"148 IU/mL","anti-CCP":">250 U/mL"},"has_prior_therapy_failure":true,"has_specialist_support":true,"documentation_gaps":[]},"gold_standard_letter":"This 67-year-old female carries a confirmed diagnosis of seropositive rheumatoid arthritis (M05.79) with objective markers of active disease: RF 148 IU/mL, anti-CCP >250 U/mL, and DAS28 score of 5.6 indicating high disease activity. Step therapy requirements have been met: the patient failed methotrexate 20mg weekly for six months due to hepatotoxicity (LFTs 3.2x ULN, discontinued 11/2023) and hydroxychloroquine 400mg daily for five months with documented inadequate response (DAS28 unchanged). Infectious disease screening prior to biologic initiation has been completed — IGRA negative and CXR clear. Rheumatology supports transition to TNF inhibitor therapy. Authorization of adalimumab is medically necessary to prevent progressive joint destruction and functional decline."},
+  {"case_id":"PA-005","insurance_type":"Oscar Health","clinical_category":"genetic_testing","drug_requested":null,"icd10_codes":["Z13.6"],"cpt_codes":["81408"],"note":"38-year-old male requesting hereditary cancer gene panel (CPT 81408). No personal cancer history. No first-degree relatives with cancer. Patient reports general health anxiety and read about genetic testing online. No genetic counseling completed. No referral from oncology or genetics. Does not meet NCCN or payer criteria for hereditary cancer syndrome testing.","documentation_quality":"weak","true_label":"DENY","extraction":{"diagnoses":["Z13.6"],"drugs_failed":[],"lab_values":{},"has_prior_therapy_failure":false,"has_specialist_support":false,"documentation_gaps":["No personal cancer history","No qualifying family history","No genetic counseling completed","Does not meet NCCN testing criteria"]},"gold_standard_letter":"Following clinical review, the request for hereditary cancer syndrome gene panel testing (CPT 81408) does not meet Oscar Health medical necessity criteria. Coverage for comprehensive hereditary cancer panels requires documentation of personal history of cancer consistent with hereditary syndrome, or first- or second-degree family history meeting NCCN hereditary cancer testing guidelines (e.g., breast cancer <50, ovarian cancer at any age, two or more relatives with same cancer). The submitted documentation reflects neither a qualifying personal history nor a family history meeting these thresholds. We recommend the patient complete a genetic counseling consultation, after which the counselor can assess whether criteria are met and resubmit with appropriate clinical justification."},
+  {"case_id":"PA-006","insurance_type":"UnitedHealthcare Choice Plus","clinical_category":"mental_health","drug_requested":"esketamine 56mg intranasal (Spravato)","icd10_codes":["F33.2"],"cpt_codes":["99214"],"note":"49-year-old female with treatment-resistant major depressive disorder (F33.2). PHQ-9 score 21 (severe). Failed sertraline 200mg x 10 weeks (no response), escitalopram 20mg x 8 weeks (partial response, PHQ-9 18), venlafaxine 225mg x 14 weeks (intolerance — hypertensive urgency, BP 188/112). No active substance use disorder per AUDIT-C. Psychiatrist at REMS-certified clinic requesting esketamine. Columbia Suicide Severity Rating Scale: moderate ideation, no plan or intent. Current safety plan in place.","documentation_quality":"strong","true_label":"PENDING_REVIEW","extraction":{"diagnoses":["F33.2"],"drugs_failed":["sertraline 200mg","escitalopram 20mg","venlafaxine 225mg"],"lab_values":{"PHQ-9":"21","BP":"188/112","C-SSRS":"moderate ideation"},"has_prior_therapy_failure":true,"has_specialist_support":true,"documentation_gaps":[]},"gold_standard_letter":"This 49-year-old female presents with treatment-resistant major depressive disorder (F33.2) with a current PHQ-9 score of 21 indicating severe depression. Three adequate antidepressant trials have failed meeting UnitedHealthcare criteria for treatment resistance: sertraline 200mg for 10 weeks (no response), escitalopram 20mg for 8 weeks (partial response), and venlafaxine 225mg for 14 weeks (discontinued for hypertensive urgency). The treating psychiatrist operates within a REMS-certified clinical site as required for esketamine administration. Moderate suicidal ideation is noted on C-SSRS with a current safety plan in place, which constitutes a clinical urgency supporting expedited review. This case is flagged for human clinical review given safety considerations, and a peer-to-peer is available upon request."},
+  {"case_id":"PA-007","insurance_type":"Molina Healthcare (Medicaid)","clinical_category":"bariatric_surgery","drug_requested":null,"icd10_codes":["E66.01","G47.33","I10"],"cpt_codes":["43644"],"note":"34-year-old female requesting laparoscopic Roux-en-Y gastric bypass (CPT 43644). BMI 43.7 kg/m2 with morbid obesity (E66.01). Comorbidities: OSA confirmed by polysomnography (AHI 28, moderate-severe) (G47.33), hypertension on amlodipine 10mg and lisinopril 20mg (I10). Completed 6-month supervised weight loss program per Molina requirement — monthly visit documentation submitted. Psychological clearance obtained from licensed psychologist 02/2024. Nutritional counseling x 4 sessions completed. No medical contraindications identified by bariatric surgery team.","documentation_quality":"strong","true_label":"APPROVE","extraction":{"diagnoses":["E66.01","G47.33","I10"],"drugs_failed":[],"lab_values":{"BMI":"43.7","AHI":"28"},"has_prior_therapy_failure":false,"has_specialist_support":true,"documentation_gaps":[]},"gold_standard_letter":"This 34-year-old female meets Molina Healthcare criteria for bariatric surgical intervention. BMI is 43.7 kg/m2 meeting the BMI ≥40 threshold, with qualifying comorbidities including moderate-severe obstructive sleep apnea (G47.33, AHI 28 on polysomnography) and hypertension requiring dual antihypertensive therapy (I10). All required pre-operative criteria have been satisfied: six months of supervised weight loss program with monthly visit documentation, psychological evaluation with clearance by a licensed psychologist, and completion of nutritional counseling. The bariatric surgery team has identified no medical contraindications. Authorization of laparoscopic Roux-en-Y gastric bypass (CPT 43644) is supported as medically necessary and consistent with Molina Medicaid bariatric surgery coverage criteria."},
+  {"case_id":"PA-008","insurance_type":"Aetna HMO","clinical_category":"biologic_pulmonology","drug_requested":"dupilumab 300mg SC q2w (Dupixent) for asthma","icd10_codes":["J45.51"],"cpt_codes":[],"note":"29-year-old female with severe persistent asthma (J45.51) requesting dupilumab. Currently on albuterol PRN only. No documented trial of inhaled corticosteroid (ICS). No ICS/LABA combination therapy trialed. FEV1 not documented in past 12 months. Eosinophil count not on file. No pulmonology referral. Two ED visits for asthma in past year noted but no outpatient asthma management plan.","documentation_quality":"weak","true_label":"DENY","extraction":{"diagnoses":["J45.51"],"drugs_failed":[],"lab_values":{},"has_prior_therapy_failure":false,"has_specialist_support":false,"documentation_gaps":["No ICS trial documented","No ICS/LABA trial documented","FEV1 not documented","Eosinophil count absent","No pulmonology referral"]},"gold_standard_letter":"Following review, the request for dupilumab for severe asthma (J45.51) does not meet Aetna criteria at this time. Dupilumab as add-on maintenance therapy for asthma requires documentation of: (1) inadequate response to medium-to-high dose ICS/LABA combination therapy for a minimum of 3 months, (2) baseline FEV1 measurement, and (3) eosinophil count or FeNO level to establish type 2 inflammatory phenotype eligibility. The submitted record reflects no prior ICS or ICS/LABA therapy, and required objective measurements are absent. We recommend initiating guideline-directed step-up therapy beginning with ICS, followed by ICS/LABA if needed, with pulmonology consultation to evaluate for biologic candidacy after an adequate treatment trial."},
+  {"case_id":"PA-009","insurance_type":"Humana Gold Plus (Medicare Advantage)","clinical_category":"oncology","drug_requested":"pembrolizumab 200mg IV q3w (Keytruda)","icd10_codes":["C34.12"],"cpt_codes":["96413"],"note":"74-year-old male with stage IV metastatic NSCLC, left upper lobe primary (C34.12). PD-L1 TPS 82%. No EGFR mutation. No ALK rearrangement. No ROS1 rearrangement. ECOG performance status 1. Oncology tumor board reviewed 02/14/2024 and approved pembrolizumab monotherapy as first-line treatment per KEYNOTE-024 data. Creatinine 1.1, LFTs WNL. No active autoimmune disease. Pulmonary function adequate. Patient counseled on immune-related adverse events and enrolled in Keytruda REMS.","documentation_quality":"strong","true_label":"APPROVE","extraction":{"diagnoses":["C34.12"],"drugs_failed":[],"lab_values":{"PD-L1 TPS":"82%","ECOG":"1"},"has_prior_therapy_failure":false,"has_specialist_support":true,"documentation_gaps":[]},"gold_standard_letter":"This 74-year-old male presents with stage IV metastatic non-small cell lung cancer (C34.12) with PD-L1 TPS of 82%, meeting the ≥50% threshold established in KEYNOTE-024 for pembrolizumab monotherapy as first-line treatment. Biomarker testing confirms absence of EGFR, ALK, and ROS1 alterations that would indicate alternative targeted therapy. ECOG performance status is 1, and organ function is adequate for immunotherapy. Oncology tumor board reviewed and endorsed this treatment plan on 02/14/2024. Authorization of pembrolizumab 200mg IV every 3 weeks (CPT 96413) is medically necessary and consistent with NCCN Category 1 evidence and Humana oncology coverage criteria."},
+  {"case_id":"PA-010","insurance_type":"BlueCross BlueShield PPO","clinical_category":"glp1_obesity","drug_requested":"tirzepatide 5mg SC weekly (Mounjaro)","icd10_codes":["E11.65","E66.09"],"cpt_codes":[],"note":"52-year-old female with Type 2 diabetes (E11.65) and obesity (E66.09), BMI 38.4. HbA1c 8.7%. On metformin 2000mg daily (tolerated, partial response — HbA1c was 10.1% at initiation). Requesting tirzepatide for dual benefit of glycemic control and weight reduction. Endocrinology note supports. ASCVD risk score 18%. No prior GLP-1 or GIP agonist trial. No prior SGLT-2 inhibitor trial documented.","documentation_quality":"partial","true_label":"PENDING_REVIEW","extraction":{"diagnoses":["E11.65","E66.09"],"drugs_failed":["metformin 2000mg (partial response)"],"lab_values":{"HbA1c":"8.7%","BMI":"38.4","ASCVD":"18%"},"has_prior_therapy_failure":false,"has_specialist_support":true,"documentation_gaps":["No prior GLP-1 trial documented","No SGLT-2 inhibitor trial documented"]},"gold_standard_letter":"This 52-year-old female presents with Type 2 diabetes (E11.65) and obesity (E66.09) with HbA1c of 8.7% and BMI 38.4 on metformin 2000mg with partial response. Endocrinology supports tirzepatide initiation. However, BlueCross step therapy criteria for GIP/GLP-1 agonists typically require documentation of an SGLT-2 inhibitor trial or clinical contraindication prior to a dual agonist. The record does not document a prior SGLT-2 or GLP-1 trial, nor a contraindication to these agents. This case is routed for clinical review to determine whether a step therapy exception is warranted given the degree of glycemic uncontrol and ASCVD risk, or whether additional step therapy documentation is required."},
+  {"case_id":"PA-011","insurance_type":"Cigna HMO","clinical_category":"biologic_rheumatology","drug_requested":"secukinumab 150mg SC monthly (Cosentyx)","icd10_codes":["M07.60","L40.50"],"cpt_codes":["99213"],"note":"45-year-old male with psoriatic arthritis (M07.60) and plaque psoriasis (L40.50). PASI score 18.2, BSA 28%, DAS28 4.8. Failed methotrexate 15mg weekly x 6 months — nausea and oral ulcers, inadequate response (PASI unchanged). Failed sulfasalazine 1g BID x 4 months — inadequate joint response. Rheumatology and dermatology both support IL-17A inhibitor. No prior TNF inhibitor tried — requesting IL-17 first line given predominantly skin involvement and prior GI intolerance to methotrexate. Negative TB screening.","documentation_quality":"strong","true_label":"APPROVE","extraction":{"diagnoses":["M07.60","L40.50"],"drugs_failed":["methotrexate 15mg weekly","sulfasalazine 1g BID"],"lab_values":{"PASI":"18.2","BSA":"28%","DAS28":"4.8"},"has_prior_therapy_failure":true,"has_specialist_support":true,"documentation_gaps":[]},"gold_standard_letter":"This 45-year-old male carries dual diagnoses of psoriatic arthritis (M07.60) and plaque psoriasis (L40.50) with documented moderate-to-severe disease burden: PASI 18.2, BSA 28%, and DAS28 4.8. Step therapy with conventional DMARDs has been completed: methotrexate 15mg weekly for six months resulted in inadequate response and GI intolerance, and sulfasalazine 1g BID for four months produced inadequate joint response. Both rheumatology and dermatology endorse progression to biologic therapy. IL-17A inhibitor is particularly appropriate given predominant skin involvement. TB screening is negative. Authorization of secukinumab is medically necessary and consistent with ACR and AAD biologic initiation criteria."},
+  {"case_id":"PA-012","insurance_type":"UnitedHealthcare Medicaid","clinical_category":"imaging","drug_requested":null,"icd10_codes":["M51.16","M54.42"],"cpt_codes":["72148"],"note":"55-year-old male with low back pain with left-sided radiculopathy (M54.42) radiating to L4-L5 dermatomal distribution. Positive straight leg raise at 40 degrees. Foot drop noted on neurological exam (weakness 3/5 left EHL). Duration 8 weeks. No improvement with 6 weeks of PT (10 sessions documented). Ibuprofen 600mg TID trialed — partial response only. Requesting MRI lumbar spine prior to neurosurgery referral.","documentation_quality":"strong","true_label":"APPROVE","extraction":{"diagnoses":["M51.16","M54.42"],"drugs_failed":[],"lab_values":{"SLR":"positive at 40 degrees","EHL strength":"3/5"},"has_prior_therapy_failure":true,"has_specialist_support":false,"documentation_gaps":[]},"gold_standard_letter":"This 55-year-old male presents with lumbar radiculopathy (M54.42) with neurological deficits including foot drop (EHL 3/5) and positive straight leg raise at 40 degrees. The presence of progressive neurological deficit constitutes a red flag indication for advanced imaging without requiring further conservative therapy delay. Additionally, the patient has completed six weeks of physical therapy (10 documented sessions) without adequate improvement. Lumbar spine MRI (CPT 72148) is medically necessary to evaluate for herniation, stenosis, or structural pathology contributing to neurological compromise and to guide surgical consultation."},
+  {"case_id":"PA-013","insurance_type":"Anthem BCBS PPO","clinical_category":"mental_health","drug_requested":"aripiprazole lauroxil 441mg IM monthly (Aristada)","icd10_codes":["F20.9"],"cpt_codes":["99214"],"note":"32-year-old male with schizophrenia (F20.9), two hospitalizations in past 18 months secondary to medication non-adherence with oral antipsychotics. Currently on oral aripiprazole 15mg daily — adequate symptom control when adherent. Psychiatry documents ongoing non-adherence pattern (missed doses >50% per pill count). PANSS score 62 at last visit. Long-acting injectable requested to address adherence barrier. No metabolic contraindications. Weight stable.","documentation_quality":"strong","true_label":"APPROVE","extraction":{"diagnoses":["F20.9"],"drugs_failed":["oral aripiprazole 15mg (non-adherence)"],"lab_values":{"PANSS":"62"},"has_prior_therapy_failure":false,"has_specialist_support":true,"documentation_gaps":[]},"gold_standard_letter":"This 32-year-old male carries a diagnosis of schizophrenia (F20.9) with a documented pattern of medication non-adherence resulting in two psychiatric hospitalizations in 18 months. Oral aripiprazole 15mg demonstrates adequate symptom control when taken as prescribed, confirming therapeutic response to the aripiprazole molecule. Psychiatry has documented >50% dose non-adherence by pill count, establishing a clear clinical rationale for long-acting injectable formulation to address the adherence barrier driving relapse and hospitalization. Transition to aripiprazole lauroxil 441mg IM monthly is medically necessary, clinically appropriate, and expected to reduce hospitalizations and associated costs consistent with Anthem coverage criteria for LAI antipsychotics."},
+  {"case_id":"PA-014","insurance_type":"Cigna PPO","clinical_category":"glp1_diabetes","drug_requested":"dulaglutide 1.5mg SC weekly (Trulicity)","icd10_codes":["E11.9"],"cpt_codes":[],"note":"61-year-old male with Type 2 diabetes (E11.9). HbA1c 7.8%. Currently on metformin 1000mg BID. Requesting dulaglutide. No documented failure of SGLT-2 inhibitor. No documented cardiovascular disease, CKD, or heart failure. Physician note states patient 'prefers injectable.' BMI 29.1.","documentation_quality":"weak","true_label":"DENY","extraction":{"diagnoses":["E11.9"],"drugs_failed":[],"lab_values":{"HbA1c":"7.8%","BMI":"29.1"},"has_prior_therapy_failure":false,"has_specialist_support":false,"documentation_gaps":["No SGLT-2 inhibitor trial documented","No CV/CKD/HF indication for GLP-1 first-line","HbA1c near goal on current regimen","Preference alone not a medical necessity criterion"]},"gold_standard_letter":"Following review, the request for dulaglutide (GLP-1 receptor agonist) does not meet Cigna step therapy criteria. Cigna requires documentation of either: (1) inadequate response or contraindication to an SGLT-2 inhibitor, or (2) a qualifying high-cardiovascular-risk or renal indication (established ASCVD, heart failure, CKD) supporting GLP-1 first-line use per ADA guidelines. The submitted record reflects an HbA1c of 7.8% on metformin — near the standard glycemic target — with BMI 29.1 and no documented CV or renal comorbidities. Patient preference does not constitute medical necessity. We recommend trialing an SGLT-2 inhibitor as the next line agent; if inadequate response or intolerance is documented, resubmission with that documentation will be reviewed."},
+  {"case_id":"PA-015","insurance_type":"BlueCross Medicaid","clinical_category":"infusion_neurology","drug_requested":"IVIG 30g IV monthly (Privigen)","icd10_codes":["G61.0"],"cpt_codes":["96365","96366"],"note":"43-year-old female with Guillain-Barré syndrome, relapsing form / CIDP confirmed (G61.0). Nerve conduction study 01/2024 confirms demyelinating polyneuropathy. Neurology at academic medical center recommends IVIG maintenance therapy. Failed corticosteroids — prednisone 60mg daily x 8 weeks, inadequate response and significant weight gain (+22 lbs). Failed plasmapheresis x 5 sessions — partial response only, relapsed within 4 weeks. Functional status MRC sum score 42/60. IgA level normal (rules out IgA deficiency contraindication).","documentation_quality":"strong","true_label":"APPROVE","extraction":{"diagnoses":["G61.0"],"drugs_failed":["prednisone 60mg daily","plasmapheresis x5"],"lab_values":{"MRC sum score":"42/60","IgA":"normal"},"has_prior_therapy_failure":true,"has_specialist_support":true,"documentation_gaps":[]},"gold_standard_letter":"This 43-year-old female carries a confirmed diagnosis of CIDP (G61.0) supported by nerve conduction study demonstrating demyelinating polyneuropathy. Standard first-line therapies have been exhausted: corticosteroids (prednisone 60mg x 8 weeks) produced inadequate response with significant side effects, and plasmapheresis (5 sessions) achieved only partial response with relapse at 4 weeks. Academic neurology supports IVIG maintenance therapy. IgA levels are normal ruling out the primary IVIG contraindication. MRC sum score of 42/60 documents meaningful functional impairment. Authorization of IVIG 30g IV monthly is medically necessary per established CIDP treatment guidelines and BlueCross coverage criteria."},
+  {"case_id":"PA-016","insurance_type":"Aetna PPO","clinical_category":"biologic_gastroenterology","drug_requested":"vedolizumab 300mg IV q8w (Entyvio)","icd10_codes":["K50.10"],"cpt_codes":["96413"],"note":"38-year-old male with moderate-to-severe Crohn's disease (K50.10). Harvey-Bradshaw Index 12. Failed mesalamine — not appropriate for Crohn's per GI note. Failed azathioprine 2.5mg/kg x 5 months (leukopenia, WBC 2.8). Failed adalimumab 160/80/40mg — secondary loss of response after 14 months, fecal calprotectin rising to 1840 ug/g. Gastroenterology recommends vedolizumab given gut-selective mechanism and prior TNF failure. CRP 18.2. Colonoscopy 01/2024: deep ulcerations ileum and right colon.","documentation_quality":"strong","true_label":"APPROVE","extraction":{"diagnoses":["K50.10"],"drugs_failed":["azathioprine 2.5mg/kg","adalimumab (secondary LOR)"],"lab_values":{"HBI":"12","CRP":"18.2","fecal calprotectin":"1840 ug/g","WBC":"2.8"},"has_prior_therapy_failure":true,"has_specialist_support":true,"documentation_gaps":[]},"gold_standard_letter":"This 38-year-old male presents with moderate-to-severe Crohn's disease (K50.10) with objective disease activity: Harvey-Bradshaw Index 12, CRP 18.2, fecal calprotectin 1840 ug/g, and colonoscopic evidence of deep ileal and colonic ulcerations. Step therapy has been completed: azathioprine was discontinued for leukopenia (WBC 2.8) and adalimumab produced secondary loss of response after 14 months of initial benefit. Gastroenterology supports vedolizumab as a gut-selective option following TNF inhibitor failure. Authorization is medically necessary and consistent with Aetna biologic step therapy criteria for IBD."},
+  {"case_id":"PA-017","insurance_type":"Oscar Health","clinical_category":"imaging","drug_requested":null,"icd10_codes":["N40.1","R33.8"],"cpt_codes":["74178"],"note":"68-year-old male with BPH (N40.1) and urinary retention (R33.8). PSA 6.8 ng/mL (age-adjusted borderline). Requesting CT abdomen/pelvis with contrast (CPT 74178). No urology referral. Requesting CT rather than ultrasound renal/bladder which is first-line for BPH evaluation. No prior imaging. Urodynamic testing not completed.","documentation_quality":"weak","true_label":"DENY","extraction":{"diagnoses":["N40.1","R33.8"],"drugs_failed":[],"lab_values":{"PSA":"6.8 ng/mL"},"has_prior_therapy_failure":false,"has_specialist_support":false,"documentation_gaps":["First-line imaging (renal/bladder ultrasound) not attempted","No urology referral","CT not first-line for BPH evaluation"]},"gold_standard_letter":"Following review, CT abdomen/pelvis with contrast (CPT 74178) does not meet Oscar medical necessity criteria for the evaluation of BPH and urinary retention at this time. Clinical guidelines and Oscar coverage policy designate renal/bladder ultrasound as the appropriate first-line imaging modality for BPH evaluation and post-void residual assessment. CT with contrast carries additional radiation and contrast risk without evidence of superior diagnostic yield over ultrasound for initial BPH workup. We recommend proceeding with renal/bladder ultrasound and urology referral. If additional findings on ultrasound suggest complex pathology warranting CT, resubmission with clinical rationale will be reviewed."},
+  {"case_id":"PA-018","insurance_type":"Humana PPO","clinical_category":"oncology","drug_requested":"olaparib 300mg PO BID (Lynparza)","icd10_codes":["C50.912","Z15.01"],"cpt_codes":["99215"],"note":"54-year-old female with metastatic breast cancer (C50.912), BRCA1 germline pathogenic variant confirmed (Z15.01). ER+/HER2-negative. Prior lines: letrozole (progression), palbociclib + fulvestrant (progression at 14 months). Oncology requesting olaparib as third-line based on OlympiAD trial data. ECOG 1. Creatinine 0.9, adequate marrow reserve (ANC 2.1, Hgb 10.8). Genetic counseling completed.","documentation_quality":"strong","true_label":"APPROVE","extraction":{"diagnoses":["C50.912","Z15.01"],"drugs_failed":["letrozole","palbociclib + fulvestrant"],"lab_values":{"ECOG":"1","ANC":"2.1","Hgb":"10.8","Creatinine":"0.9"},"has_prior_therapy_failure":true,"has_specialist_support":true,"documentation_gaps":[]},"gold_standard_letter":"This 54-year-old female presents with metastatic ER+/HER2-negative breast cancer (C50.912) with confirmed BRCA1 germline pathogenic variant (Z15.01), establishing eligibility for PARP inhibitor therapy per FDA approval and NCCN Category 1 guidelines. Two prior lines of therapy have been completed with documented progression: letrozole and palbociclib/fulvestrant. ECOG performance status is 1 and organ function is adequate for olaparib initiation. Genetic counseling has been completed. Authorization of olaparib 300mg PO BID is medically necessary and consistent with Humana oncology coverage criteria for BRCA-mutated metastatic breast cancer."},
+  {"case_id":"PA-019","insurance_type":"Cigna HMO","clinical_category":"mental_health","drug_requested":"transcranial magnetic stimulation (TMS)","icd10_codes":["F33.1"],"cpt_codes":["90867"],"note":"44-year-old female with moderate MDD (F33.1). PHQ-9 score 14. On sertraline 100mg — first antidepressant trial, 6 weeks in. Requesting TMS immediately. No prior augmentation strategies tried. No referral to psychiatry. No documented contraindications to continuing pharmacotherapy.","documentation_quality":"weak","true_label":"DENY","extraction":{"diagnoses":["F33.1"],"drugs_failed":[],"lab_values":{"PHQ-9":"14"},"has_prior_therapy_failure":false,"has_specialist_support":false,"documentation_gaps":["Fewer than 2 adequate antidepressant trials","Current trial incomplete (6 weeks)","No psychiatry referral","No augmentation strategies attempted"]},"gold_standard_letter":"Following review, transcranial magnetic stimulation (CPT 90867) does not meet Cigna coverage criteria for major depressive disorder at this time. Cigna requires documentation of inadequate response to at least two adequate antidepressant trials (adequate defined as therapeutic dose for minimum 6-8 weeks) prior to TMS authorization. The submitted record reflects a single antidepressant trial at 6 weeks, which has not yet reached the minimum adequate duration for response assessment. We recommend completing the current sertraline trial to 8 weeks and trialing at least one additional agent or augmentation strategy. Psychiatry referral may also assist in optimizing the pharmacotherapy regimen before TMS is considered."},
+  {"case_id":"PA-020","insurance_type":"UnitedHealthcare PPO","clinical_category":"biologic_dermatology","drug_requested":"secukinumab 300mg SC (Cosentyx) for plaque psoriasis","icd10_codes":["L40.0"],"cpt_codes":[],"note":"36-year-old male with severe plaque psoriasis (L40.0). PASI 22, DLQI 19, BSA 40%. Failed methotrexate 20mg weekly x 12 weeks — hepatotoxicity (LFTs 2.8x ULN). Failed narrowband UVB phototherapy x 24 sessions — inadequate response, PASI unchanged. Failed adalimumab 40mg q2w x 20 weeks — loss of response, PASI rebounded from 9 to 19. Dermatology at academic center supports IL-17A inhibitor as third-line. Negative TB, no active infections.","documentation_quality":"strong","true_label":"APPROVE","extraction":{"diagnoses":["L40.0"],"drugs_failed":["methotrexate 20mg weekly","narrowband UVB x24","adalimumab 40mg q2w"],"lab_values":{"PASI":"22","DLQI":"19","BSA":"40%"},"has_prior_therapy_failure":true,"has_specialist_support":true,"documentation_gaps":[]},"gold_standard_letter":"This 36-year-old male presents with severe plaque psoriasis (L40.0) with objective disease severity documented at PASI 22, DLQI 19, and BSA 40%. Three prior treatment modalities have failed: methotrexate for hepatotoxicity, narrowband UVB phototherapy with inadequate response, and adalimumab with secondary loss of response. This represents a thorough step therapy history satisfying UnitedHealthcare criteria for biologic escalation. Dermatology at an academic center endorses IL-17A inhibition. TB screening is negative. Authorization of secukinumab 300mg SC is medically necessary and appropriate for this refractory severe psoriasis presentation."},
+  {"case_id":"PA-021","insurance_type":"Aetna HMO","clinical_category":"glp1_obesity","drug_requested":"semaglutide 2.4mg SC weekly (Wegovy)","icd10_codes":["E66.01","I10","E78.5"],"cpt_codes":[],"note":"47-year-old female with morbid obesity (E66.01, BMI 41.2), hypertension (I10), and hyperlipidemia (E78.5). Requesting semaglutide 2.4mg for chronic weight management. Completed 6-month lifestyle intervention program (documented monthly visits). BMI qualifies at 41.2 (threshold ≥30 with comorbidity or ≥40 without). Two comorbidities present. No prior GLP-1 agonist for obesity. Endocrinology supportive.","documentation_quality":"strong","true_label":"APPROVE","extraction":{"diagnoses":["E66.01","I10","E78.5"],"drugs_failed":[],"lab_values":{"BMI":"41.2"},"has_prior_therapy_failure":false,"has_specialist_support":true,"documentation_gaps":[]},"gold_standard_letter":"This 47-year-old female meets Aetna criteria for chronic weight management pharmacotherapy. BMI is 41.2 kg/m2, exceeding the ≥40 threshold for obesity pharmacotherapy authorization, with additional qualifying comorbidities of hypertension and hyperlipidemia. A six-month structured lifestyle intervention has been completed with documented monthly visits, satisfying the behavioral intervention prerequisite. Endocrinology supports pharmacotherapy initiation. Semaglutide 2.4mg SC weekly (Wegovy) is FDA-approved for chronic weight management and is medically appropriate for this patient's metabolic risk profile."},
+  {"case_id":"PA-022","insurance_type":"Molina Medicaid","clinical_category":"infusion_hematology","drug_requested":"eculizumab 900mg IV q2w (Soliris)","icd10_codes":["D59.5"],"cpt_codes":["96413"],"note":"28-year-old male with paroxysmal nocturnal hemoglobinuria (D59.5) confirmed by flow cytometry (clone size 72%). LDH 4.8x ULN. Two thrombotic events in past 18 months (DVT, portal vein thrombosis). On anticoagulation. Hematology at tertiary center recommends eculizumab. Meningococcal vaccination series completed. No prior complement inhibitor therapy — eculizumab is first-line per PNH guidelines.","documentation_quality":"strong","true_label":"APPROVE","extraction":{"diagnoses":["D59.5"],"drugs_failed":[],"lab_values":{"PNH clone size":"72%","LDH":"4.8x ULN"},"has_prior_therapy_failure":false,"has_specialist_support":true,"documentation_gaps":[]},"gold_standard_letter":"This 28-year-old male carries a confirmed diagnosis of paroxysmal nocturnal hemoglobinuria (D59.5) by flow cytometry with clone size of 72% and LDH 4.8x ULN indicating active complement-mediated hemolysis. Two thrombotic events in 18 months document high-risk disease phenotype. Complement inhibitor therapy is the standard of care for symptomatic PNH and does not require prior therapy failure — it is first-line per international PNH guidelines. Meningococcal vaccination has been completed as required prior to eculizumab initiation. Tertiary hematology supports therapy. Authorization of eculizumab is medically necessary to reduce thrombotic risk and hemolysis in this high-risk PNH patient."},
+  {"case_id":"PA-023","insurance_type":"Anthem PPO","clinical_category":"imaging","drug_requested":null,"icd10_codes":["Z12.31"],"cpt_codes":["77067"],"note":"42-year-old female requesting screening bilateral diagnostic mammogram (CPT 77067). No symptoms, no palpable mass, no family history of breast cancer, no prior abnormal mammogram. Last screening mammogram 8 months ago — reported as BI-RADS 1 (negative). Requesting repeat screening before annual interval. No documented clinical indication for early repeat screening.","documentation_quality":"weak","true_label":"DENY","extraction":{"diagnoses":["Z12.31"],"drugs_failed":[],"lab_values":{"prior BI-RADS":"1 (negative)"},"has_prior_therapy_failure":false,"has_specialist_support":false,"documentation_gaps":["Prior mammogram normal only 8 months ago","No high-risk indication for shortened interval","No symptoms or family history warranting early repeat"]},"gold_standard_letter":"Following review, repeat screening mammography (CPT 77067) does not meet Anthem medical necessity criteria at this time. The patient's most recent mammogram 8 months ago returned BI-RADS 1 (negative) with no findings warranting shortened surveillance interval. Anthem coverage guidelines support annual screening mammography for average-risk women ages 40 and older. A shortened interval before 12 months requires documentation of: prior BI-RADS 3 or higher finding, high-risk designation (BRCA mutation, lifetime risk >20%, prior chest radiation), or a new clinical finding such as a palpable mass. None of these indications are present. Annual screening is recommended beginning 4 months from now."},
+  {"case_id":"PA-024","insurance_type":"BCBS Federal Employee Plan","clinical_category":"biologic_rheumatology","drug_requested":"abatacept 125mg SC weekly (Orencia)","icd10_codes":["M05.79"],"cpt_codes":["99214"],"note":"61-year-old female with seropositive RA (M05.79), RF 210 IU/mL, anti-CCP 380 U/mL. DAS28 5.9. Failed methotrexate 25mg weekly x 8 months (inadequate response). Failed leflunomide 20mg daily x 6 months (inadequate response, DAS28 5.7). Failed adalimumab 40mg q2w x 12 months — primary non-response (DAS28 never below 5.1). Rheumatology recommends T-cell costimulation inhibitor given TNF primary non-responder status. Negative TB, hepatitis B/C. No active infections.","documentation_quality":"strong","true_label":"APPROVE","extraction":{"diagnoses":["M05.79"],"drugs_failed":["methotrexate 25mg weekly","leflunomide 20mg daily","adalimumab 40mg q2w"],"lab_values":{"DAS28":"5.9","RF":"210 IU/mL","anti-CCP":"380 U/mL"},"has_prior_therapy_failure":true,"has_specialist_support":true,"documentation_gaps":[]},"gold_standard_letter":"This 61-year-old female presents with seropositive RA (M05.79) with high disease activity (DAS28 5.9, RF 210 IU/mL, anti-CCP 380 U/mL). Three prior treatment lines have been completed: methotrexate 25mg weekly for 8 months (inadequate response), leflunomide 20mg for 6 months (inadequate response), and adalimumab 40mg q2w for 12 months (primary non-response). TNF primary non-response is a clinically recognized indication for switching to a biologic with a distinct mechanism of action. Rheumatology recommends abatacept based on evidence supporting its use in TNF-IR patients. Infectious disease screening is negative. Authorization is medically necessary and meets BCBS FEP biologic step therapy criteria."},
+  {"case_id":"PA-025","insurance_type":"Cigna PPO","clinical_category":"mental_health","drug_requested":"naltrexone/bupropion 8mg/90mg (Contrave)","icd10_codes":["E66.09","F10.20"],"cpt_codes":[],"note":"39-year-old male with obesity (E66.09, BMI 37.8) and alcohol use disorder in remission >12 months (F10.20). Requesting Contrave for weight management. Psychiatry confirms AUD remission, no active cravings, stable on naltrexone 50mg oral (now requesting to transition to combination product). Endocrinology supportive. No opioid use. No seizure history. Blood pressure 128/82. Liver enzymes WNL.","documentation_quality":"partial","true_label":"PENDING_REVIEW","extraction":{"diagnoses":["E66.09","F10.20"],"drugs_failed":[],"lab_values":{"BMI":"37.8","BP":"128/82","LFTs":"WNL"},"has_prior_therapy_failure":false,"has_specialist_support":true,"documentation_gaps":["No prior weight loss medication trial","AUD history requires clinical review for bupropion appropriateness"]},"gold_standard_letter":"This 39-year-old male requests naltrexone/bupropion (Contrave) for obesity (E66.09, BMI 37.8) with a history of alcohol use disorder in remission >12 months (F10.20). Psychiatry confirms sustained remission and current naltrexone use for AUD maintenance, supporting the naltrexone component. However, the bupropion component warrants clinical review in the context of AUD history given seizure risk considerations, despite no documented seizure history and normal LFTs. Additionally, Cigna criteria for weight management pharmacotherapy typically require documentation of prior lifestyle intervention. This case is routed for clinical pharmacist review to evaluate the risk-benefit of bupropion in this specific psychiatric context and confirm lifestyle intervention documentation."}
+];
+
+/* ============== UTIL ============== */
+const DECISION_COLORS = {
+  "APPROVE": { bg: "var(--approve-bg)", fg: "var(--approve)", hex: "#16a34a" },
+  "DENY": { bg: "var(--deny-bg)", fg: "var(--deny)", hex: "#dc2626" },
+  "PENDING_REVIEW": { bg: "var(--pending-bg)", fg: "var(--pending)", hex: "#d97706" }
+};
+const DECISION_LABEL = {
+  "APPROVE": "APPROVE",
+  "DENY": "DENY",
+  "PENDING_REVIEW": "PENDING"
+};
+const DOC_COLORS = {
+  "strong": "#16a34a",
+  "partial": "#d97706",
+  "weak": "#dc2626"
+};
+function badgeHTML(lbl) {
+  const cls = lbl === "APPROVE" ? "approve" : lbl === "DENY" ? "deny" : "pending";
+  return `<span class="badge ${cls}"><span class="d"></span>${DECISION_LABEL[lbl]}</span>`;
+}
+function fmtCategory(c) {
+  return c.replace(/_/g, " ").replace(/\b\w/g, ch => ch.toUpperCase());
+}
+function escapeHTML(s) {
+  if (s === null || s === undefined) return "";
+  return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+function fmtCurrency(n) {
+  if (n >= 1e6) return "$" + (n / 1e6).toFixed(2) + "M";
+  if (n >= 1e3) return "$" + Math.round(n / 1e3) + "K";
+  return "$" + Math.round(n);
+}
+function fmtInt(n) { return n.toLocaleString("en-US"); }
+
+/* ============== CHARTS ============== */
+Chart.defaults.color = "#475569";
+Chart.defaults.borderColor = "rgba(15,23,42,0.06)";
+Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif";
+
+// Decision donut
+new Chart(document.getElementById("decisionChart"), {
+  type: "doughnut",
+  data: {
+    labels: ["APPROVE", "DENY", "PENDING_REVIEW"],
+    datasets: [{
+      data: [
+        CASES.filter(c => c.true_label === "APPROVE").length,
+        CASES.filter(c => c.true_label === "DENY").length,
+        CASES.filter(c => c.true_label === "PENDING_REVIEW").length
+      ],
+      backgroundColor: ["#16a34a", "#dc2626", "#d97706"],
+      borderColor: "#ffffff",
+      borderWidth: 3,
+      hoverOffset: 8
+    }]
+  },
+  options: {
+    cutout: "65%",
+    plugins: {
+      legend: { position: "bottom", labels: { padding: 14, boxWidth: 12 } }
+    },
+    maintainAspectRatio: false
+  }
+});
+
+// Category bar
+const catCounts = {};
+CASES.forEach(c => { catCounts[c.clinical_category] = (catCounts[c.clinical_category] || 0) + 1; });
+const catLabels = Object.keys(catCounts).sort((a, b) => catCounts[b] - catCounts[a]);
+new Chart(document.getElementById("categoryChart"), {
+  type: "bar",
+  data: {
+    labels: catLabels.map(fmtCategory),
+    datasets: [{
+      data: catLabels.map(l => catCounts[l]),
+      backgroundColor: "rgba(37,99,235,0.7)",
+      borderColor: "#2563eb",
+      borderWidth: 1,
+      borderRadius: 6
+    }]
+  },
+  options: {
+    indexAxis: "y",
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { stepSize: 1 }, grid: { color: "rgba(15,23,42,0.06)" } },
+      y: { grid: { display: false } }
+    },
+    maintainAspectRatio: false
+  }
+});
+
+// Doc quality vs decision (stacked bar)
+const docQualities = ["strong", "partial", "weak"];
+const decisionKeys = ["APPROVE", "DENY", "PENDING_REVIEW"];
+const docDecisionCounts = {};
+decisionKeys.forEach(d => {
+  docDecisionCounts[d] = docQualities.map(q => CASES.filter(c => c.documentation_quality === q && c.true_label === d).length);
+});
+new Chart(document.getElementById("docChart"), {
+  type: "bar",
+  data: {
+    labels: docQualities.map(q => q[0].toUpperCase() + q.slice(1)),
+    datasets: decisionKeys.map(d => ({
+      label: DECISION_LABEL[d],
+      data: docDecisionCounts[d],
+      backgroundColor: DECISION_COLORS[d].hex,
+      borderRadius: 4
+    }))
+  },
+  options: {
+    plugins: { legend: { position: "bottom", labels: { padding: 14, boxWidth: 12 } } },
+    scales: {
+      x: { stacked: true, grid: { display: false } },
+      y: { stacked: true, ticks: { stepSize: 1 }, grid: { color: "rgba(15,23,42,0.06)" } }
+    },
+    maintainAspectRatio: false
+  }
+});
+
+// Payer distribution
+const payerCounts = {};
+CASES.forEach(c => {
+  const key = c.insurance_type.split(/\s+/).slice(0, 2).join(" ").replace(/\(.*/, "").trim();
+  payerCounts[key] = (payerCounts[key] || 0) + 1;
+});
+const payerLabels = Object.keys(payerCounts).sort((a, b) => payerCounts[b] - payerCounts[a]);
+new Chart(document.getElementById("payerChart"), {
+  type: "bar",
+  data: {
+    labels: payerLabels,
+    datasets: [{
+      data: payerLabels.map(l => payerCounts[l]),
+      backgroundColor: "rgba(8,145,178,0.6)",
+      borderColor: "#0891b2",
+      borderWidth: 1,
+      borderRadius: 6
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false }, ticks: { maxRotation: 45, minRotation: 0, autoSkip: false, font: { size: 10 } } },
+      y: { ticks: { stepSize: 1 }, grid: { color: "rgba(15,23,42,0.06)" } }
+    },
+    maintainAspectRatio: false
+  }
+});
+
+/* ============== DEMO TABS (featured cases) ============== */
+function renderDemo(cid) {
+  const c = CASES.find(x => x.case_id === cid);
+  const container = document.getElementById("demoContainer");
+  container.innerHTML = renderCaseDetail(c, true);
+}
+document.getElementById("demoTabs").addEventListener("click", e => {
+  const btn = e.target.closest(".demo-tab");
+  if (!btn) return;
+  document.querySelectorAll(".demo-tab").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderDemo(btn.dataset.demo);
+});
+renderDemo("PA-002");
+
+/* ============== CASE GRID ============== */
+function renderCaseCards(filter, search) {
+  const grid = document.getElementById("caseGrid");
+  const q = (search || "").trim().toLowerCase();
+  const filtered = CASES.filter(c => {
+    if (filter !== "ALL" && c.true_label !== filter) return false;
+    if (!q) return true;
+    const hay = [c.drug_requested, c.insurance_type, (c.icd10_codes || []).join(" "), (c.cpt_codes || []).join(" "), c.clinical_category, c.case_id].filter(Boolean).join(" ").toLowerCase();
+    return hay.includes(q);
+  });
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="card" style="grid-column:1/-1;text-align:center;color:var(--ink-faint)">No cases match this filter.</div>`;
+    return;
+  }
+  grid.innerHTML = filtered.map(c => {
+    const title = c.drug_requested || (c.cpt_codes && c.cpt_codes.length ? `Procedure ${c.cpt_codes[0]}` : c.clinical_category);
+    const docColor = DOC_COLORS[c.documentation_quality] || "#9aa8c7";
+    return `
+      <div class="case" data-cid="${c.case_id}">
+        <div class="doc" style="color:${docColor};border-color:${docColor}33">${c.documentation_quality}</div>
+        <div class="row"><span class="cid">${c.case_id}</span>${badgeHTML(c.true_label)}</div>
+        <div class="title">${escapeHTML(title)}</div>
+        <div class="meta">${escapeHTML(fmtCategory(c.clinical_category))} · ${escapeHTML((c.icd10_codes || []).join(", ") || "—")}</div>
+        <div class="pay">${escapeHTML(c.insurance_type)}</div>
+      </div>`;
+  }).join("");
+  grid.querySelectorAll(".case").forEach(el => {
+    el.addEventListener("click", () => openModal(el.dataset.cid));
+  });
+}
+
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderCaseCards(btn.dataset.filter, document.getElementById("searchInput").value);
+  });
+});
+document.getElementById("searchInput").addEventListener("input", e => {
+  const activeFilter = document.querySelector(".filter-btn.active").dataset.filter;
+  renderCaseCards(activeFilter, e.target.value);
+});
+renderCaseCards("ALL", "");
+
+/* ============== MODAL / CASE DETAIL RENDERER ============== */
+function renderCaseDetail(c, inline) {
+  // Build pipeline trace
+  const dx = c.extraction.diagnoses || [];
+  const dfail = c.extraction.drugs_failed || [];
+  const gaps = c.extraction.documentation_gaps || [];
+  const labs = c.extraction.lab_values || {};
+  const specSupport = c.extraction.has_specialist_support;
+  const therapyFail = c.extraction.has_prior_therapy_failure;
+
+  // Decision-specific rule engine trace
+  const rulesFor = {
+    APPROVE: { stepCls: "ok", stepTxt: "Step-therapy satisfied", docCls: "ok", docTxt: "Documentation complete — no gaps flagged", ragCls: "ok", ragTxt: "Payer policy retrieved; all criteria mapped", llmCls: "ok", llmTxt: "LLM issues APPROVE with cited clinical rationale" },
+    DENY: { stepCls: "fail", stepTxt: "Step-therapy NOT satisfied or indication absent", docCls: "fail", docTxt: `${gaps.length} documentation gap${gaps.length !== 1 ? "s" : ""} identified`, ragCls: "ok", ragTxt: "Payer policy retrieved; denial grounded in specific clause", llmCls: "fail", llmTxt: "LLM issues DENY with remediation guidance (what to submit to re-apply)" },
+    PENDING_REVIEW: { stepCls: "warn", stepTxt: "Partial step-therapy or safety-relevant context", docCls: "warn", docTxt: "Mixed documentation — some criteria met, some ambiguous", ragCls: "ok", ragTxt: "Payer policy retrieved; rules ambiguous at the margin", llmCls: "warn", llmTxt: "Routed to human reviewer; peer-to-peer offered" }
+  }[c.true_label];
+
+  const fields = [
+    ["Payer", c.insurance_type],
+    ["Clinical category", fmtCategory(c.clinical_category)],
+    ["ICD-10", (c.icd10_codes || []).join(", ") || "—"],
+    ["CPT", (c.cpt_codes || []).join(", ") || "—"],
+    ["Drugs failed", dfail.length ? dfail.join(", ") : "—"],
+    ["Specialist support", specSupport ? "Yes" : "No"],
+    ["Prior therapy failure", therapyFail ? "Yes" : "No"],
+    ["Doc quality", c.documentation_quality]
+  ];
+  const labRows = Object.entries(labs).map(([k, v]) => `<div class="field"><div class="k">${escapeHTML(k)}</div><div class="v">${escapeHTML(v)}</div></div>`).join("");
+
+  const gapHTML = gaps.length
+    ? `<ul class="gap-list">${gaps.map(g => `<li>${escapeHTML(g)}</li>`).join("")}</ul>`
+    : `<div class="muted" style="color:var(--approve)">✓ No documentation gaps identified.</div>`;
+
+  const header = inline ? `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+      <span class="chip" style="font-family:var(--mono);font-size:12px;color:var(--ink-dim);border:1px solid var(--line);padding:4px 10px;border-radius:999px;">${c.case_id}</span>
+      ${badgeHTML(c.true_label)}
+      <span class="catchip">${escapeHTML(fmtCategory(c.clinical_category))}</span>
+    </div>
+    <h3 style="margin:2px 0 10px; font-size:18px;">${escapeHTML(c.drug_requested || (c.cpt_codes[0] ? "Procedure " + c.cpt_codes[0] : c.clinical_category))}</h3>
+  ` : "";
+
+  return `
+  ${header}
+  <div class="card" ${inline ? "" : "style='border:none;padding:0;background:transparent;'"}>
+    <h4 class="sec">Stage 1 · Submitted clinical note</h4>
+    <div class="note-block">${escapeHTML(c.note)}</div>
+
+    <h4 class="sec">Stage 2 · Extraction + rule engine trace</h4>
+    <div class="pipeline-trace">
+      <div class="trace-step ok">1</div>
+      <div class="trace-body">
+        <div class="trace-title">NLP extraction</div>
+        <div class="trace-desc">Diagnoses: <span style="color:var(--ink)">${dx.join(", ") || "—"}</span> · Drugs failed: <span style="color:var(--ink)">${dfail.join(", ") || "—"}</span></div>
+      </div>
+      <div class="trace-step ${rulesFor.stepCls}">2</div>
+      <div class="trace-body">
+        <div class="trace-title">Step-therapy check</div>
+        <div class="trace-desc">${rulesFor.stepTxt}</div>
+      </div>
+      <div class="trace-step ${rulesFor.docCls}">3</div>
+      <div class="trace-body">
+        <div class="trace-title">Documentation completeness</div>
+        <div class="trace-desc">${rulesFor.docTxt}</div>
+        ${gapHTML}
+      </div>
+      <div class="trace-step ${rulesFor.ragCls}">4</div>
+      <div class="trace-body">
+        <div class="trace-title">RAG policy retrieval</div>
+        <div class="trace-desc">${rulesFor.ragTxt}</div>
+      </div>
+      <div class="trace-step ${rulesFor.llmCls}">5</div>
+      <div class="trace-body" style="border-left:none;">
+        <div class="trace-title">LLM decision + letter</div>
+        <div class="trace-desc">${rulesFor.llmTxt}</div>
+      </div>
+    </div>
+
+    <h4 class="sec">Structured fields</h4>
+    <div class="fields">
+      ${fields.map(([k, v]) => `<div class="field"><div class="k">${escapeHTML(k)}</div><div class="v">${escapeHTML(v)}</div></div>`).join("")}
+    </div>
+
+    ${labRows ? `<h4 class="sec">Lab & clinical values</h4><div class="fields">${labRows}</div>` : ""}
+
+    <h4 class="sec">Stage 4 · Generated justification letter</h4>
+    <div class="letter">
+      <div class="letterhead">
+        <span>To: ${escapeHTML(c.insurance_type)} — Prior Authorization Review</span>
+        <span>Case ${escapeHTML(c.case_id)} · ${escapeHTML(DECISION_LABEL[c.true_label])}</span>
+      </div>
+      ${escapeHTML(c.gold_standard_letter).replace(/\n/g, "<br>")}
+    </div>
+  </div>
+  `;
+}
+
+function openModal(cid) {
+  const c = CASES.find(x => x.case_id === cid);
+  if (!c) return;
+  document.getElementById("modalCid").textContent = c.case_id;
+  document.getElementById("modalBadge").innerHTML = badgeHTML(c.true_label);
+  document.getElementById("modalCat").textContent = fmtCategory(c.clinical_category);
+  document.getElementById("modalBody").innerHTML = renderCaseDetail(c, false);
+  document.getElementById("modal").classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+function closeModal() {
+  document.getElementById("modal").classList.remove("show");
+  document.body.style.overflow = "";
+}
+document.getElementById("modal").addEventListener("click", e => {
+  if (e.target.id === "modal") closeModal();
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+/* ============== ROI CALCULATOR ============== */
+const roi = {
+  vol: document.getElementById("volIn"),
+  auto: document.getElementById("autoIn"),
+  cost: document.getElementById("costIn"),
+  autocost: document.getElementById("autocostIn"),
+  over: document.getElementById("overIn"),
+  overRate: document.getElementById("overRateIn")
+};
+function updateROI() {
+  const volMo = +roi.vol.value;
+  const autoPct = +roi.auto.value / 100;
+  const manualCost = +roi.cost.value;
+  const autoCostDollars = +roi.autocost.value / 100; // slider 0-200 → $0.00-$2.00
+  const overAvoid = +roi.over.value;
+  const overRate = +roi.overRate.value / 100;
+
+  const volYr = volMo * 12;
+  const autoVol = volYr * autoPct;
+  const manualVol = volYr - autoVol;
+
+  const statusQuoCost = volYr * manualCost;
+  const newCost = manualVol * manualCost + autoVol * autoCostDollars;
+  const directSavings = statusQuoCost - newCost;
+
+  const overturnSavings = autoVol * overRate * overAvoid;
+  const totalSavings = directSavings + overturnSavings;
+  const autoCostYearly = autoVol * autoCostDollars;
+
+  const minutesPerManual = 15;
+  const redeployedHours = autoVol * minutesPerManual / 60;
+
+  document.getElementById("volOut").textContent = fmtInt(volMo);
+  document.getElementById("autoOut").textContent = Math.round(autoPct * 100) + "%";
+  document.getElementById("costOut").textContent = "$" + manualCost;
+  document.getElementById("autocostOut").textContent = "$" + autoCostDollars.toFixed(2);
+  document.getElementById("overOut").textContent = "$" + overAvoid;
+  document.getElementById("overRateOut").textContent = Math.round(overRate * 100) + "%";
+
+  document.getElementById("saveOut").textContent = fmtCurrency(totalSavings);
+  document.getElementById("autoCostYr").textContent = fmtCurrency(autoCostYearly);
+  document.getElementById("autoVol").textContent = fmtInt(Math.round(autoVol));
+  document.getElementById("hoursOut").textContent = fmtInt(Math.round(redeployedHours));
+}
+Object.values(roi).forEach(s => s.addEventListener("input", updateROI));
+updateROI();
+
+</script>
+</body>
+</html>
