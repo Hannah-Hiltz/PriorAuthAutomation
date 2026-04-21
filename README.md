@@ -86,7 +86,7 @@ PriorAuthAutomation/
 │   ├── decision_summary.csv
 │   └── gap_report.csv
 │
-├── docs/                               # GitHub Pages (business case & system design)
+├── docs/                               # GitHub Pages (Business Case, System Design) & Live Demo
 │
 ├── pipeline_diagram.png                # Pipeline architecture diagram
 ├── .gitignore.txt
