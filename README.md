@@ -38,9 +38,9 @@ This pipeline converts unstructured clinical notes into structured, policy-groun
 
 ## Time Crunch? Run the Full Pipeline in One Click
 
-This notebook runs the complete pipeline (NLP extraction → RAG → LLM → letter generation → evaluation) in a single notebook using the production `src/` modules.
+This notebook runs the complete pipeline (NLP extraction → RAG → LLM → letter generation → evaluation) in a single notebook using the production `src/` modules. For convenience, the interactive dashboard is included, too! 
 
-[Open End-to-End Pipeline in Colab](https://colab.research.google.com/github/Hannah_Hiltz/PriorAuthAutomation/blob/main/notebooks/00_full_pipeline_demo.ipynb)
+[Open End-to-End Pipeline in Colab](https://colab.research.google.com/github/Hannah_Hiltz/PriorAuthAutomation/blob/main/notebooks/00_full_pipeline_demo.ipynb) | [Open End-to-End Pipeline in Colab](https://colab.research.google.com/github/Hannah-Hiltz/PriorAuthAutomation/blob/main/notebooks/00_full_pipeline_demo.ipynb) | [![Live Dashboard](https://img.shields.io/badge/▶_Live_Demo-Interactive_Dashboard-2563eb?style=for-the-badge)](https://hannah-hiltz.github.io/PriorAuthAutomation/) 
 
 If not using the end-to-end notebook, you will need to run the notebooks in order. Each notebook exports a data file used by the next. 
 
