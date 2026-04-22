@@ -4,7 +4,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
-![Status](https://img.shields.io/badge/v1.0-Live%20Demo-yellow)
+![Status](https://img.shields.io/badge/v1.0-Updates%20Coming!-yellow)
 ![Domain](https://img.shields.io/badge/Domain-Healthcare%20AI-purple)
 ![Made with Colab](https://img.shields.io/badge/Made%20with-Colab-orange?logo=googlecolab)
 
